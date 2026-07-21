@@ -3,13 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDS--A9g8iIKEYzVmRukKmu0N4hjjAb6pY",
-  authDomain: "nexestudo.firebaseapp.com",
-  projectId: "nexestudo",
-  storageBucket: "nexestudo.firebasestorage.app",
-  messagingSenderId: "694933765606",
-  appId: "1:694933765606:web:74dae54d5c773796bd6a27",
-  measurementId: "G-G22BJ8Q0KK"
+  apiKey: "AIzaSyAXqpR2VeQRYghwfPiSVbb01LHpEUzITH8",
+  authDomain: "nexestudo-b0e0a.firebaseapp.com",
+  projectId: "nexestudo-b0e0a",
+  storageBucket: "nexestudo-b0e0a.firebasestorage.app",
+  messagingSenderId: "462342649252",
+  appId: "1:462342649252:web:42ec410d5b209279173d31",
+  measurementId: "G-KE0KDMRKL0"
 };
 
 const app = initializeApp(firebaseConfig);
