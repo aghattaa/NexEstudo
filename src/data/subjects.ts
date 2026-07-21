@@ -268,82 +268,252 @@ export const subjectData: Record<string, SubjectData> = {
         label: '6º ano',
         topics: [
           createTopic('Sistema de Numeração e Operações', 'EF06MA01, EF06MA05', 'Leitura, escrita e ordenação de números naturais e racionais. Divisibilidade, números primos e compostos.', [
-            'https://www.youtube.com/embed/Jf0sA3wBqXE?si=_CBK1VYxitGQGU3v',
-            'https://www.youtube.com/embed/e78_5WIssSU?si=YAmlzSDUNQ_2HoIo',
-            'https://www.youtube.com/embed/0UGJRHq2PS4?si=Txg0sdI_BijwjPRR'
+            'https://www.youtube.com/embed/Jf0sA3wBqXE',
+            'https://www.youtube.com/embed/e78_5WIssSU',
+            'https://www.youtube.com/embed/0UGJRHq2PS4'
           ], [
-            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 1', channelName: 'Ferretto', videoLink: 'https://youtu.be/Jf0sA3wBqXE?si=pldiTnfVx15LMPTD' },
-            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 2', channelName: 'Ferretto', videoLink: 'https://youtu.be/e78_5WIssSU?si=HDknML1Fsc-fpyZR' },
-            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 3', channelName: 'Ferretto', videoLink: 'https://youtu.be/0UGJRHq2PS4?si=AqRlXj4K7EINtrvf' }
+            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 1', channelName: 'Ferreto', videoLink: 'https://youtu.be/Jf0sA3wBqXE?si=pkKc77CqciO9ox-S' },
+            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 2', channelName: 'Ferreto', videoLink: 'https://youtu.be/e78_5WIssSU?si=rQV0CMu3hOZkHz0B' },
+            { videoTitle: 'Sistema de Numeração e Operações - Vídeo 3', channelName: 'Ferreto', videoLink: 'https://youtu.be/0UGJRHq2PS4?si=TTUTJUswFjZtfwuZ' }
           ]),
           createTopic('Frações e Decimais', 'EF06MA07, EF06MA11', 'Equivalência, comparação, adição e subtração de frações. Operações (adição, subtração, multiplicação, divisão e potenciação) com racionais decimais.', [
-            'https://www.youtube.com/embed/YJyY6A_MOQc?si=8UzXUl1cJkBSExOk',
-            'https://www.youtube.com/embed/SgJpB78R7x0?si=aRnizmxJEUHDMggT',
-            'https://www.youtube.com/embed/13jlmVyGrLo?si=Ff_7QfRje2Sbqnkm'
+            'https://www.youtube.com/embed/YJyY6A_MOQc',
+            'https://www.youtube.com/embed/SgJpB78R7x0',
+            'https://www.youtube.com/embed/13jlmVyGrLo'
+          ], [
+            { videoTitle: 'Frações e Decimais - Vídeo 1', channelName: 'Ferreto', videoLink: 'https://youtu.be/YJyY6A_MOQc?si=sCEHRI5RvCBGRZ5o' },
+            { videoTitle: 'Frações e Decimais - Vídeo 2', channelName: 'Ferreto', videoLink: 'https://youtu.be/SgJpB78R7x0?si=Me0H4LgnarzwSw8X' },
+            { videoTitle: 'Frações e Decimais - Vídeo 3', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/13jlmVyGrLo?feature=shared' }
           ]),
           createTopic('Porcentagens e Proporcionalidade', 'EF06MA13', 'Cálculo de porcentagens em contexto de educação financeira usando a lógica da proporcionalidade.', [
-            'https://www.youtube.com/embed/CERiIwParX4?si=k8qM3r-jf8zeAj3T',
-            'https://www.youtube.com/embed/GjxEHeAKWAU?si=665Wz5hgOGYiAsYV'
+            'https://www.youtube.com/embed/CERiIwParX4',
+            'https://www.youtube.com/embed/GjxEHeAKWAU'
+          ], [
+            { videoTitle: 'Porcentagens e Proporcionalidade - Vídeo 1', channelName: 'Ferreto', videoLink: 'https://youtu.be/CERiIwParX4?si=3K9XmenW8RggiyP8' },
+            { videoTitle: 'Porcentagens e Proporcionalidade - Vídeo 2', channelName: 'Sandrocuriodicasdemat', videoLink: 'https://youtu.be/GjxEHeAKWAU?si=knCE6l5T1c8SbS37' }
           ]),
           createTopic('Igualdade e Partilha', 'EF06MA14, EF06MA15', 'Propriedades da igualdade para determinar valores desconhecidos. Problemas de partilha em partes desiguais (razões entre parte e todo).', [
-            'https://www.youtube.com/embed/tfVucbD7WMA?si=2_dUQt-NSp5CmWVV',
-            'https://www.youtube.com/embed/Jy9sHO2nBUo?si=KmPIEU0IalYpUAvX'
+            'https://www.youtube.com/embed/tfVucbD7WMA',
+            'https://www.youtube.com/embed/Jy9sHO2nBUo'
+          ], [
+            { videoTitle: 'Igualdade e Partilha - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/tfVucbD7WMA?si=NtO7yk2294eZaAP_' },
+            { videoTitle: 'Igualdade e Partilha - Vídeo 2', channelName: 'Ricardohemke', videoLink: 'https://youtu.be/Jy9sHO2nBUo?si=dVGhNuKdG-TfBPtT' }
           ]),
           createTopic('Prismas, Pirâmides e Polígonos', 'EF06MA17, EF06MA19, EF06MA20', 'Relações entre vértices, faces e arestas de prismas/pirâmides. Classificação detalhada de triângulos e quadriláteros.', [
-            'https://www.youtube.com/embed/QsKnb8Qy5dM?si=OGfScIP1NTM2s3VK',
-            'https://www.youtube.com/embed/Kgh93SCaJPw?si=auiy8ZDPjJrC3H5s'
+            'https://www.youtube.com/embed/QsKnb8Qy5dM',
+            'https://www.youtube.com/embed/Kgh93SCaJPw'
+          ], [
+            { videoTitle: 'Prismas, Pirâmides e Polígonos - Vídeo 1', channelName: 'Anapaulaapaso', videoLink: 'https://youtu.be/QsKnb8Qy5dM?si=YBimcoBCPeuBzupX' },
+            { videoTitle: 'Prismas, Pirâmides e Polígonos - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/Kgh93SCaJPw?si=Mk58okE6basvOi6R' }
           ]),
           createTopic('Medidas e Ângulos', 'EF06MA24, EF06MA27', 'Problemas reais com comprimento, massa, tempo, temperatura e área. Medida de ângulos utilizando transferidor e tecnologias.', [
-            'https://www.youtube.com/embed/nAvqZSglTmA?si=NtTBKJharv7tG5nj',
-            'https://www.youtube.com/embed/dHr5phd_qL8?si=wd9hdo9NefsQtrRU'
+            'https://www.youtube.com/embed/nAvqZSglTmA',
+            'https://www.youtube.com/embed/dHr5phd_qL8'
+          ], [
+            { videoTitle: 'Medidas e Ângulos - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/nAvqZSglTmA?si=vp4QkYZ9g4CifDCa' },
+            { videoTitle: 'Medidas e Ângulos - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/dHr5phd_qL8?si=rtkJvb0zgIl6b_Ek' }
           ]),
-          createTopic('Perímetro e Área', 'EF06MA29', 'Análise profunda das mudanças de perímetro e área ao ampliar ou reduzir lados de um quadrado.', ['https://www.youtube.com/embed/poMf9MQJIgg?si=EH_MyfgzFQRoE6Bb']),
-          createTopic('Probabilidade Aleatória', 'EF06MA30', 'Cálculo da probabilidade de um evento aleatório usando forma fracionária, decimal e percentual.', ['https://www.youtube.com/embed/AZH67sWDW5w?si=FfiaKlEjSBIRg3ne']),
-          createTopic('Análise de Gráficos e Pesquisas', 'EF06MA32, EF06MA33', 'Leitura, interpretação e planejamento de coleta de dados em pesquisas estatísticas, especialmente com foco ambiental.', ['https://www.youtube.com/embed/BrxdHW5ajho?si=FG3aAH3de5QFsoCQ']),
+          createTopic('Perímetro e Área', 'EF06MA29', 'Análise profunda das mudanças de perímetro e área ao ampliar ou reduzir lados de um quadrado.', [
+            'https://www.youtube.com/embed/poMf9MQJIgg'
+          ], [
+            { videoTitle: 'Perímetro e Área - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/poMf9MQJIgg?si=pzNwYHqE1yT5UEJ4' }
+          ]),
+          createTopic('Probabilidade Aleatória', 'EF06MA30', 'Cálculo da probabilidade de um evento aleatório usando forma fracionária, decimal e percentual.', [
+            'https://www.youtube.com/embed/AZH67sWDW5w'
+          ], [
+            { videoTitle: 'Probabilidade Aleatória - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/AZH67sWDW5w?si=BmHHDaASxYSyyBq5' }
+          ]),
+          createTopic('Análise de Gráficos e Pesquisas', 'EF06MA32, EF06MA33', 'Leitura, interpretação e planejamento de coleta de dados em pesquisas estatísticas, especialmente com foco ambiental.', [
+            'https://www.youtube.com/embed/BrxdHW5ajho'
+          ], [
+            { videoTitle: 'Análise de Gráficos e Pesquisas - Vídeo 1', channelName: 'Amagiadoaprender', videoLink: 'https://youtu.be/BrxdHW5ajho?feature=shared' }
+          ]),
         ],
       },
       {
         year: 7,
         label: '7º ano',
         topics: [
-          createTopic('Múltiplos, Divisores e Porcentagens', 'EF07MA01, EF07MA02', 'Resolução de problemas envolvendo MDC, MMC e porcentagens (acréscimos e decréscimos em contexto financeiro).', ['https://www.youtube.com/embed/0QZVJFOE4cE?si=FkiIjJMz8CM0v7fS', 'https://www.youtube.com/embed/0IST1fdMnDA?si=8hyPcMmEdX953FNc']),
-          createTopic('Números Inteiros', 'EF07MA03', 'Ordenação, representação na reta numérica e as operações de adição e subtração com números negativos e positivos.', ['https://www.youtube.com/embed/68CP_MPzXqo?si=cshfjGtqBkDXg2i2']),
-          createTopic('Operações com Racionais', 'EF07MA11, EF07MA12', 'Domínio da multiplicação e divisão de números racionais (fracionária e decimal) e suas propriedades matemáticas.', ['https://www.youtube.com/embed/M9PiRFGbsCs?si=nT7s1f6mpgvm1E1r']),
-          createTopic('Linguagem Algébrica', 'EF07MA13', 'Introdução à álgebra: compreensão do conceito de variável como letra ou símbolo para expressar relação entre grandezas.', ['https://www.youtube.com/embed/zQRqqNyjGJo?si=npLo6Z-4AI3avJ-W']),
-          createTopic('Equações de 1º Grau e Proporção', 'EF07MA17, EF07MA18', 'Identificação de grandezas proporcionais. Modelagem e resolução de problemas usando equações lineares do tipo ax + b = c.', ['https://www.youtube.com/embed/x4k8950MVeg?si=d4mmcBkhU9Ip1vwD', 'https://www.youtube.com/embed/NXb8T626NSo?si=hw3x-IFOjWmsO1Dw']),
-          createTopic('Simetrias e Transformações', 'EF07MA21', 'Identificação e construção de figuras obtidas por simetrias de translação, rotação e reflexão.', ['https://www.youtube.com/embed/HGWAm4wXCY4?si=8nzHcgpyeb7nC1XF']),
-          createTopic('Ângulos e Triângulos', 'EF07MA23, EF07MA24', 'Relações de ângulos formados por retas paralelas cortadas por transversais. Construção de triângulos confirmando que a soma é 180°.', ['https://www.youtube.com/embed/nAvqZSglTmA?si=whE3LAv2yB0rGVvj', 'https://www.youtube.com/embed/Ka3GluTldeY?si=0kpmtn-L6uRdsiej']),
-          createTopic('Volume, Área e Número Pi', 'EF07MA30, EF07MA31, EF07MA33', 'Cálculo de volume de blocos e expressões de área. Reconhecimento da constante Pi (π) como razão em circunferências.', ['https://www.youtube.com/embed/mAbNOaLkSnY?si=TBMps0hmwbjE75Ie', 'https://www.youtube.com/embed/vdQMamMsPN4?si=LyTskwutiJMcre5I', 'https://www.youtube.com/embed/bHHjMg28BEQ?si=FcXmnmiNbAxdug0z']),
-          createTopic('Experimentos e Pesquisas Estatísticas', 'EF07MA34, EF07MA35, EF07MA36', 'Estimativa de probabilidade via experimentos. Cálculo de média e amplitude. Criação de relatórios e gráficos de setores.', ['https://www.youtube.com/embed/yGk-WazqYx4?si=VxpbhjQ5y_kTpFXJ', 'https://www.youtube.com/embed/udsHUCuUWAg?si=rvkHoLQzuXcI-WqZ']),
+          createTopic('Múltiplos, Divisores e Porcentagens', 'EF07MA01, EF07MA02', 'Resolução de problemas envolvendo MDC, MMC e porcentagens (acréscimos e decréscimos em contexto financeiro).', [
+            'https://www.youtube.com/embed/0QZVJFOE4cE',
+            'https://www.youtube.com/embed/0IST1fdMnDA'
+          ], [
+            { videoTitle: 'Múltiplos, Divisores e Porcentagens - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/0QZVJFOE4cE?si=66aT7328cHv8dj07' },
+            { videoTitle: 'Múltiplos, Divisores e Porcentagens - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/0IST1fdMnDA?si=U9s-DqqDkBWINP-L' }
+          ]),
+          createTopic('Números Inteiros', 'EF07MA03', 'Ordenação, representação na reta numérica e as operações de adição e subtração com números negativos e positivos.', [
+            'https://www.youtube.com/embed/68CP_MPzXqo'
+          ], [
+            { videoTitle: 'Números Inteiros - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/68CP_MPzXqo?si=K9J0PCQls0oivx4a' }
+          ]),
+          createTopic('Operações com Racionais', 'EF07MA11, EF07MA12', 'Domínio da multiplicação e divisão de números racionais (fracionária e decimal) e suas propriedades matemáticas.', [
+            'https://www.youtube.com/embed/M9PiRFGbsCs'
+          ], [
+            { videoTitle: 'Operações com Racionais - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/M9PiRFGbsCs?feature=shared' }
+          ]),
+          createTopic('Linguagem Algébrica', 'EF07MA13', 'Introdução à álgebra: compreensão do conceito de variável como letra ou símbolo para expressar relação entre grandezas.', [
+            'https://www.youtube.com/embed/videoseries?list=PLBmJPikw8kvmouwU8AVCTld8tXy8kapiF'
+          ], [
+            { videoTitle: 'Linguagem Algébrica - Playlist', channelName: 'Por RA matemática', videoLink: 'https://youtube.com/playlist?list=PLBmJPikw8kvmouwU8AVCTld8tXy8kapiF&si=I_x0ci4WHA8h1CqG' }
+          ]),
+          createTopic('Equações de 1º Grau e Proporção', 'EF07MA17, EF07MA18', 'Identificação de grandezas proporcionais. Modelagem e resolução de problemas usando equações lineares do tipo ax + b = c.', [
+            'https://www.youtube.com/embed/NXb8T626NSo',
+            'https://www.youtube.com/embed/SnJzuESRmZU'
+          ], [
+            { videoTitle: 'Equações de 1º Grau e Proporção - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/NXb8T626NSo?si=YGP9kwNWhL6R2Iml' },
+            { videoTitle: 'Equações de 1º Grau e Proporção - Vídeo 2', channelName: 'Sandrocuriodicasdemat', videoLink: 'https://youtu.be/SnJzuESRmZU?si=QHG32h0Xlcs4wX7A' }
+          ]),
+          createTopic('Simetrias e Transformações', 'EF07MA21', 'Identificação e construção de figuras obtidas por simetrias de translação, rotação e reflexão.', [
+            'https://www.youtube.com/embed/HGWAm4wXCY4'
+          ], [
+            { videoTitle: 'Simetrias e Transformações - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/HGWAm4wXCY4?si=fTXEhVK7V2t-KAR0' }
+          ]),
+          createTopic('Ângulos e Triângulos', 'EF07MA23, EF07MA24', 'Relações de ângulos formados por retas paralelas cortadas por transversais. Construção de triângulos confirmando que a soma é 180°.', [
+            'https://www.youtube.com/embed/Ka3GluTldeY',
+            'https://www.youtube.com/embed/nAvqZSglTmA'
+          ], [
+            { videoTitle: 'Ângulos e Triângulos - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/Ka3GluTldeY?si=tBiJ5LyMrhEz-l1f' },
+            { videoTitle: 'Ângulos e Triângulos - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/nAvqZSglTmA?si=377lT7kcUPvipd8V' }
+          ]),
+          createTopic('Volume, Área e Número Pi', 'EF07MA30, EF07MA31, EF07MA33', 'Cálculo de volume de blocos e expressões de área. Reconhecimento da constante Pi (π) como razão em circunferências.', [
+            'https://www.youtube.com/embed/videoseries?list=PLGyv8aUrOlzAPTsfxv27CdubzZg5RW83-',
+            'https://www.youtube.com/embed/vdQMamMsPN4',
+            'https://www.youtube.com/embed/bHHjMg28BEQ'
+          ], [
+            { videoTitle: 'Volume, Área e Número Pi - Playlist', channelName: 'Giscomgiz', videoLink: 'https://youtube.com/playlist?list=PLGyv8aUrOlzAPTsfxv27CdubzZg5RW83-&si=VqQHSqFpBVCnK4qP' },
+            { videoTitle: 'Volume, Área e Número Pi - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/vdQMamMsPN4?si=IpXxUao7qZzO5bq5' },
+            { videoTitle: 'Volume, Área e Número Pi - Vídeo 3', channelName: 'Matematicamarcelobelini', videoLink: 'https://youtu.be/bHHjMg28BEQ?si=wLlVfQ2D4fsTitNd' }
+          ]),
+          createTopic('Experimentos e Pesquisas Estatísticas', 'EF07MA34, EF07MA35, EF07MA36', 'Estimativa de probabilidade via experimentos. Cálculo de média e amplitude. Criação de relatórios e gráficos de setores.', [
+            'https://www.youtube.com/embed/yGk-WazqYx4',
+            'https://www.youtube.com/embed/udsHUCuUWAg'
+          ], [
+            { videoTitle: 'Experimentos e Pesquisas Estatísticas - Vídeo 1', channelName: 'Matemáticaem3minutos', videoLink: 'https://youtu.be/yGk-WazqYx4?si=jRNi_-SY-mCy-Sn3' },
+            { videoTitle: 'Experimentos e Pesquisas Estatísticas - Vídeo 2', channelName: 'Euvohaprendermatemática', videoLink: 'https://youtu.be/udsHUCuUWAg?si=mVT7A_RCIRccYPP0' }
+          ]),
         ],
       },
       {
         year: 8,
         label: '8º ano',
         topics: [
-          createTopic('Potenciação e Notação Científica', 'EF08MA01, EF08MA02', 'Cálculos avançados com potências, notação científica e resolução de problemas utilizando a relação entre potenciação e radiciação.', ['https://www.youtube.com/embed/EqSiqXyfaqA?si=sAwZlsr2me2Z0ZT2', 'https://www.youtube.com/embed/tMOqp1Rqr0E?si=P1B6yleE0lqNYluO']),
-          createTopic('Princípio Multiplicativo e Dízimas', 'EF08MA03, EF08MA05', 'Cálculo de combinações pelo princípio multiplicativo da contagem e obtenção da fração geratriz de dízimas periódicas.', ['https://www.youtube.com/embed/Lfn5CzoSXkE?si=vGJ7xynp1CzRTWgv', 'https://www.youtube.com/embed/hMmPidxIDiw?si=-ZQplXkJmUlbpRjr']),
-          createTopic('Equações e Sistemas de 1º Grau', 'EF08MA07, EF08MA08', 'Associação de equações de 1º grau a retas no plano cartesiano e métodos para a resolução de sistemas de equações.', ['https://www.youtube.com/embed/cs0BdQyP7ZY?si=pnUzbVmbVHubi4r0', 'https://www.youtube.com/embed/oT4k6bhB4Dk?si=9HJoyIPvVmR5I__g']),
-          createTopic('Equações do 2º Grau (Simples) e Variações', 'EF08MA09, EF08MA12', 'Introdução a problemas com ax² = b. Representação no plano cartesiano da variação de grandezas (direta, inversa ou não proporcional).', ['https://www.youtube.com/embed/luR-qD_R4BM?si=d-Y9fTvafzKz2Ji3']),
-          createTopic('Propriedades de Quadriláteros e Construções', 'EF08MA14, EF08MA15', 'Demonstração geométrica de propriedades usando congruência de triângulos. Construção de bissetriz, mediatriz e ângulos exatos.', ['https://www.youtube.com/embed/83mbKwONfo4?si=IsogYTm-C98q4WZi']),
-          createTopic('Mediatriz, Bissetriz e Transformações', 'EF08MA17, EF08MA18', 'Aplicação de lugares geométricos e compreensão avançada de translações, reflexões e rotações.', ['https://www.youtube.com/embed/d31QinXPpc8?si=E5HvhzCf1hhXKUT3', 'https://www.youtube.com/embed/rDDC98e0ujw?si=0rwb2qybGv3FVyot']),
-          createTopic('Área e Volume (Aprofundamento)', 'EF08MA19, EF08MA20, EF08MA21', 'Expressões numéricas para áreas de polígonos. Volumes de recipientes retangulares e relação prática entre litro, dm³ e m³.', ['https://www.youtube.com/embed/dArATPsuLjM?si=JkfMprMxA0X1bDSN', 'https://www.youtube.com/embed/TN2zv_vSH70?si=fXZPaqxvzDKJ43NO']),
-          createTopic('Probabilidades e Análise Estatística', 'EF08MA22, EF08MA25, EF08MA27', 'Cálculo de probabilidade (soma = 1). Determinação de medidas centrais (média, moda, mediana) e execução de pesquisas amostrais completas.', ['https://www.youtube.com/embed/4cNV62z08Kc?si=uk-cTrAwZ7WkA_kV', 'https://www.youtube.com/embed/mSk2vjGXA90?si=hxkdUCSS9OLLguu_']),
+          createTopic('Potenciação e Notação Científica', 'EF08MA01, EF08MA02', 'Cálculos avançados com potências, notação científica e resolução de problemas utilizando a relação entre potenciação e radiciação.', [
+            'https://www.youtube.com/embed/EqSiqXyfaqA',
+            'https://www.youtube.com/embed/tMOqp1Rqr0E'
+          ], [
+            { videoTitle: 'Potenciação e Notação Científica - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/EqSiqXyfaqA?si=gwLqtxTxjmVKnVCI' },
+            { videoTitle: 'Potenciação e Notação Científica - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/tMOqp1Rqr0E?si=n1zZ9TwBtjgKNG5I' }
+          ]),
+          createTopic('Princípio Multiplicativo e Dízimas', 'EF08MA03, EF08MA05', 'Cálculo de combinações pelo princípio multiplicativo da contagem e obtenção da fração geratriz de dízimas periódicas.', [
+            'https://www.youtube.com/embed/Lfn5CzoSXkE',
+            'https://www.youtube.com/embed/hMmPidxIDiw'
+          ], [
+            { videoTitle: 'Princípio Multiplicativo e Dízimas - Vídeo 1', channelName: 'Matemática no papel', videoLink: 'https://youtu.be/Lfn5CzoSXkE?si=8DNbl5FeXJMEGpH9' },
+            { videoTitle: 'Princípio Multiplicativo e Dízimas - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/hMmPidxIDiw?si=sT1mMTe451savAS0' }
+          ]),
+          createTopic('Equações e Sistemas de 1º Grau', 'EF08MA07, EF08MA08', 'Associação de equações de 1º grau a retas no plano cartesiano e métodos para a resolução de sistemas de equações.', [
+            'https://www.youtube.com/embed/cs0BdQyP7ZY',
+            'https://www.youtube.com/embed/oT4k6bhB4Dk'
+          ], [
+            { videoTitle: 'Equações e Sistemas de 1º Grau - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/cs0BdQyP7ZY?si=1x2DxbK1qtMlVPZk' },
+            { videoTitle: 'Equações e Sistemas de 1º Grau - Vídeo 2', channelName: 'Ferreto', videoLink: 'https://youtu.be/oT4k6bhB4Dk?si=iMV9vq0bP5j3MaXR' }
+          ]),
+          createTopic('Equações do 2º Grau (Simples) e Variações', 'EF08MA09, EF08MA12', 'Introdução a problemas com ax² = b. Representação no plano cartesiano da variação de grandezas (direta, inversa ou não proporcional).', [
+            'https://www.youtube.com/embed/luR-qD_R4BM'
+          ], [
+            { videoTitle: 'Equações do 2º Grau (Simples) e Variações - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/luR-qD_R4BM?si=EPmkBTWDc5XTuhBZ' }
+          ]),
+          createTopic('Propriedades de Quadriláteros e Construções', 'EF08MA14, EF08MA15', 'Demonstração geométrica de propriedades usando congruência de triângulos. Construção de bissetriz, mediatriz e ângulos exatos.', [
+            'https://www.youtube.com/embed/videoseries?list=PLGyv8aUrOlzBy4h8h7gsFStvzEFIEHQuA'
+          ], [
+            { videoTitle: 'Propriedades de Quadriláteros e Construções - Playlist', channelName: 'Giscomgiz', videoLink: 'https://youtube.com/playlist?list=PLGyv8aUrOlzBy4h8h7gsFStvzEFIEHQuA&si=0eSkR9-TynKaT_gQ' }
+          ]),
+          createTopic('Mediatriz, Bissetriz e Transformações', 'EF08MA17, EF08MA18', 'Aplicação de lugares geométricos e compreensão avançada de translações, reflexões e rotações.', [
+            'https://www.youtube.com/embed/d31QinXPpc8',
+            'https://www.youtube.com/embed/rDDC98e0ujw'
+          ], [
+            { videoTitle: 'Mediatriz, Bissetriz e Transformações - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/d31QinXPpc8?si=x_souXUM1S5ipLQu' },
+            { videoTitle: 'Mediatriz, Bissetriz e Transformações - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/rDDC98e0ujw?si=V9YdPOUZqhYGfZqz' }
+          ]),
+          createTopic('Área e Volume (Aprofundamento)', 'EF08MA19, EF08MA20, EF08MA21', 'Expressões numéricas para áreas de polígonos. Volumes de recipientes retangulares e relação prática entre litro, dm³ e m³.', [
+            'https://www.youtube.com/embed/dArATPsuLjM',
+            'https://www.youtube.com/embed/TN2zv_vSH70'
+          ], [
+            { videoTitle: 'Área e Volume (Aprofundamento) - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/dArATPsuLjM?si=UlG5URBezy9n_jax' },
+            { videoTitle: 'Área e Volume (Aprofundamento) - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/TN2zv_vSH70?si=8R3xNLIJ7TjzjPwx' }
+          ]),
+          createTopic('Probabilidades e Análise Estatística', 'EF08MA22, EF08MA25, EF08MA27', 'Cálculo de probabilidade (soma = 1). Determinação de medidas centrais (média, moda, mediana) e execução de pesquisas amostrais completas.', [
+            'https://www.youtube.com/embed/4cNV62z08Kc',
+            'https://www.youtube.com/embed/mSk2vjGXA90'
+          ], [
+            { videoTitle: 'Probabilidades e Análise Estatística - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/4cNV62z08Kc?si=Y9RTXas9D0kUIFPf' },
+            { videoTitle: 'Probabilidades e Análise Estatística - Vídeo 2', channelName: 'Sandrocuriodemat', videoLink: 'https://youtu.be/mSk2vjGXA90?si=WaHSNESz72TKDxRN' }
+          ]),
         ],
       },
       {
         year: 9,
         label: '9º ano',
         topics: [
-          createTopic('Números Reais e Irracionais', 'EF09MA01, EF09MA02', 'O conjunto dos reais para medição contínua na reta. Identificação de números irracionais icônicos como √2 e Pi (π).', ['https://www.youtube.com/embed/J4vD5RpOqJY?si=kzBgeV-Bdm9_xLVZ']),
-          createTopic('Cálculos com Radicais', 'EF09MA03', 'Operações fundamentais com raízes quadradas e técnicas matemáticas para simplificação de radicais.', ['https://www.youtube.com/embed/M9PiRFGbsCs?si=j-6gGw-FYN5rbpmO']),
-          createTopic('Produtos Notáveis e Fatoração', 'EF09MA06', 'Compreensão de trinômio quadrado perfeito, diferença de quadrados e técnicas de fatoração algébrica.', ['https://www.youtube.com/embed/C_dLST3fa6s?si=oc73R4czkOgf1FAp', 'https://www.youtube.com/embed/hgr3iNJdLzE?si=fj6p5HV3he5etSxI']),
-          createTopic('Equação do 2º Grau (Fórmula de Bhaskara)', 'EF09MA07, EF09MA08', 'Resolução de equações quadráticas completas e incompletas, e uso da fórmula de Bhaskara para resolução de problemas reais.', ['https://www.youtube.com/embed/LNLvMo1PWok?si=N13N5zhpIgDV7Wab']),
-          createTopic('Grandezas Proporcionais e Regra de Três', 'EF09MA05', 'Resolução intensiva de problemas usando regra de três simples e composta em grandezas direta e inversamente proporcionais.', ['https://www.youtube.com/embed/04EB9dZoBqw?si=hOonRUv8rq9e2M76', 'https://www.youtube.com/embed/alLifth7gxE?si=lxsW_o3GVofqp79O']),
-          createTopic('Semelhança e Teorema de Pitágoras', 'EF09MA10, EF09MA13', 'Critérios clássicos de semelhança geométrica e a demonstração formal e prática do Teorema de Pitágoras.', ['https://www.youtube.com/embed/JBP0ryUtJmg?si=47BRn1xkskcRbvjC', 'https://www.youtube.com/embed/RxfPjqXx-g0?si=EIooQsDVwdZx5DsD']),
-          createTopic('Trigonometria e Geometria Analítica Básica', 'EF09MA14, EF09MA15', 'Aplicação de seno, cosseno e tangente no triângulo retângulo. Cálculo de distância entre pontos e equações da reta.', ['https://www.youtube.com/embed/lHqTFWNBtmQ?si=YFLT5LdtOKXl2R0S', 'https://www.youtube.com/embed/D-E_A04ReTE?si=Wn8CYBs7oeR2AYxv']),
-          createTopic('Área e Volume de Cilindros, Cones e Esferas', 'EF09MA19, EF09MA20', 'Modelagem tridimensional de sólidos complexos e unidades práticas em contextos contemporâneos (armazenamento de dados: MB, GB).', ['https://www.youtube.com/embed/7WpCm8fH1i8?si=IrKHSh672Op6QzsA', 'https://www.youtube.com/embed/kSuPous5WPU?si=mm7Lsc5AMs0tletW', 'https://www.youtube.com/embed/Pk-IOSEQ8sQ?si=BkpOhjVFN2BZ9hBX']),
-          createTopic('Eventos Compostos e Estatística Crítica', 'EF09MA21, EF09MA22, EF09MA23', 'Cálculo aprofundado de probabilidade composta. Análise do uso ético de dados e distorções de gráficos na mídia e pesquisas.', ['https://www.youtube.com/embed/uZo7qSZASGk?si=FixdzireYxK0535e', 'https://www.youtube.com/embed/5ctWgFOizkQ?si=sk6vdhtnc175sCXY']),
+          createTopic('Números Reais e Irracionais', 'EF09MA01, EF09MA02', 'O conjunto dos reais para medição contínua na reta. Identificação de números irracionais icônicos como √2 e Pi (π).', [
+            'https://www.youtube.com/embed/J4vD5RpOqJY'
+          ], [
+            { videoTitle: 'Números Reais e Irracionais - Vídeo 1', channelName: 'Ferreto', videoLink: 'https://youtu.be/J4vD5RpOqJY?si=5yEuHJjIrr99shmZ' }
+          ]),
+          createTopic('Cálculos com Radicais', 'EF09MA03', 'Operações fundamentais com raízes quadradas e técnicas matemáticas para simplificação de radicais.', [
+            'https://www.youtube.com/embed/M9PiRFGbsCs'
+          ], [
+            { videoTitle: 'Cálculos com Radicais - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/M9PiRFGbsCs?feature=shared' }
+          ]),
+          createTopic('Produtos Notáveis e Fatoração', 'EF09MA06', 'Compreensão de trinômio quadrado perfeito, diferença de quadrados e técnicas de fatoração algébrica.', [
+            'https://www.youtube.com/embed/C_dLST3fa6s',
+            'https://www.youtube.com/embed/hgr3iNJdLzE'
+          ], [
+            { videoTitle: 'Produtos Notáveis e Fatoração - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/C_dLST3fa6s?si=vxgxaZ1PNLopoIL7' },
+            { videoTitle: 'Produtos Notáveis e Fatoração - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/hgr3iNJdLzE?si=_aXpReWW8I6Ax7nQ' }
+          ]),
+          createTopic('Equação do 2º Grau (Fórmula de Bhaskara)', 'EF09MA07, EF09MA08', 'Resolução de equações quadráticas completas e incompletas, e uso da fórmula de Bhaskara para resolução de problemas reais.', [
+            'https://www.youtube.com/embed/LNLvMo1PWok'
+          ], [
+            { videoTitle: 'Equação do 2º Grau (Fórmula de Bhaskara) - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/LNLvMo1PWok?si=yJb04xRVX2MZDQGO' }
+          ]),
+          createTopic('Grandezas Proporcionais e Regra de Três', 'EF09MA05', 'Resolução intensiva de problemas usando regra de três simples e composta em grandezas direta e inversamente proporcionais.', [
+            'https://www.youtube.com/embed/04EB9dZoBqw',
+            'https://www.youtube.com/embed/alLifth7gxE'
+          ], [
+            { videoTitle: 'Grandezas Proporcionais e Regra de Três - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/04EB9dZoBqw?si=u3wS-PVY57QeALuY' },
+            { videoTitle: 'Grandezas Proporcionais e Regra de Três - Vídeo 2', channelName: 'Ferreto', videoLink: 'https://youtu.be/alLifth7gxE?si=VK0pJj-fA8Rb-xKH' }
+          ]),
+          createTopic('Semelhança e Teorema de Pitágoras', 'EF09MA10, EF09MA13', 'Critérios clássicos de semelhança geométrica e a demonstração formal e prática do Teorema de Pitágoras.', [
+            'https://www.youtube.com/embed/JBP0ryUtJmg',
+            'https://www.youtube.com/embed/RxfPjqXx-g0'
+          ], [
+            { videoTitle: 'Semelhança e Teorema de Pitágoras - Vídeo 1', channelName: 'Sandrocuriodicasdemat', videoLink: 'https://youtu.be/JBP0ryUtJmg?si=R-TNBSWMRcR34aRv' },
+            { videoTitle: 'Semelhança e Teorema de Pitágoras - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/RxfPjqXx-g0?si=07qK3sxSov_ZkFP6' }
+          ]),
+          createTopic('Trigonometria e Geometria Analítica Básica', 'EF09MA14, EF09MA15', 'Aplicação de seno, cosseno e tangente no triângulo retângulo. Cálculo de distância entre pontos e equações da reta.', [
+            'https://www.youtube.com/embed/lHqTFWNBtmQ',
+            'https://www.youtube.com/embed/D-E_A04ReTE'
+          ], [
+            { videoTitle: 'Trigonometria e Geometria Analítica Básica - Vídeo 1', channelName: 'Sandrocuriodicasdemat', videoLink: 'https://youtu.be/lHqTFWNBtmQ?si=AWNmdQ1xNvNW5Y_b' },
+            { videoTitle: 'Trigonometria e Geometria Analítica Básica - Vídeo 2', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/D-E_A04ReTE?si=O1zAAksVfxPkzrxI' }
+          ]),
+          createTopic('Área e Volume de Cilindros, Cones e Esferas', 'EF09MA19, EF09MA20', 'Modelagem tridimensional de sólidos complexos e unidades práticas em contextos contemporâneos (armazenamento de dados: MB, GB).', [
+            'https://www.youtube.com/embed/kSuPous5WPU',
+            'https://www.youtube.com/embed/Pk-IOSEQ8sQ',
+            'https://www.youtube.com/embed/7WpCm8fH1i8'
+          ], [
+            { videoTitle: 'Área e Volume de Cilindros, Cones e Esferas - Vídeo 1', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/kSuPous5WPU?si=zbvnRZHTEaspWj9N' },
+            { videoTitle: 'Área e Volume de Cilindros, Cones e Esferas - Vídeo 2', channelName: 'Sandrocuriodicasdemat', videoLink: 'https://youtu.be/Pk-IOSEQ8sQ?si=z1i_x9RoZqyqtPq2' },
+            { videoTitle: 'Área e Volume de Cilindros, Cones e Esferas - Vídeo 3', channelName: 'Giscomgiz', videoLink: 'https://youtu.be/7WpCm8fH1i8?si=DXpAO9Au0ncNPIZF' }
+          ]),
+          createTopic('Eventos Compostos e Estatística Crítica', 'EF09MA21, EF09MA22, EF09MA23', 'Cálculo aprofundado de probabilidade composta. Análise do uso ético de dados e distorções de gráficos na mídia e pesquisas.', [
+            'https://www.youtube.com/embed/uZo7qSZASGk',
+            'https://www.youtube.com/embed/5ctWgFOizkQ'
+          ], [
+            { videoTitle: 'Eventos Compostos e Estatística Crítica - Vídeo 1', channelName: 'Estudandomatematica', videoLink: 'https://youtu.be/uZo7qSZASGk?si=Y4-Ju4mXg-JvTo99' },
+            { videoTitle: 'Eventos Compostos e Estatística Crítica - Vídeo 2', channelName: 'Professora Gisele Ramos', videoLink: 'https://youtu.be/5ctWgFOizkQ?si=HpMhVZesr1dflh5a' }
+          ]),
         ],
       },
     ],
@@ -380,36 +550,138 @@ export const subjectData: Record<string, SubjectData> = {
           ], [
             { videoTitle: 'Máquinas Simples e Térmicas', channelName: 'com ciencia', videoLink: 'https://youtu.be/tvIk729n_rI?si=9HGaAhVh8vkuGMv5' }
           ]),
-          createScienceTopic('Propagação do Calor e Termodinâmica', 'EF07CI02, EF07CI03, EF07CI04', 'Compreensão de calor, temperatura, sensação térmica, bem como condutores e isolantes térmicos em nosso cotidiano.'),
-          createScienceTopic('Diversidade de Ecossistemas e Seres Vivos', 'EF07CI07, EF07CI08', 'Exploração dos principais biomas brasileiros e a caracterização e importância dos vírus, bactérias, fungos e protozoários.'),
-          createScienceTopic('Saúde Pública e Vacinas', 'EF07CI09, EF07CI10, EF07CI11', 'Estudo dos programas de saúde pública, saneamento básico, histórico das vacinas e mecanismos de defesa do corpo humano.'),
-          createScienceTopic('Composição do Ar, Efeito Estufa e Clima', 'EF07CI12, EF07CI13', 'Análise da atmosfera terrestre, efeito estufa natural, impacto da atividade humana e preservação da camada de ozônio.'),
-          createScienceTopic('Placas Tectônicas e Deriva Continental', 'EF07CI14, EF07CI15, EF07CI16', 'Investigação da estrutura interna da Terra, teoria da deriva continental, dinâmica de placas tectônicas, terremotos e vulcões.'),
+          createScienceTopic('Propagação do Calor e Termodinâmica', 'EF07CI02, EF07CI03, EF07CI04', 'Compreensão de calor, temperatura, sensação térmica, bem como condutores e isolantes térmicos em nosso cotidiano.', [
+            'https://www.youtube.com/embed/BiNNerc1e9U',
+            'https://www.youtube.com/embed/GYxXCr6HXcw'
+          ], [
+            { videoTitle: 'Propagação do Calor e Termodinâmica - Com Ciência', channelName: 'com ciencia', videoLink: 'https://youtu.be/BiNNerc1e9U?si=Z0TeGGc5I3_9hxr5' },
+            { videoTitle: 'Propagação do Calor e Termodinâmica - Descomplica', channelName: 'descomplica', videoLink: 'https://youtu.be/GYxXCr6HXcw?si=Lgoc_j9tKeKexBWa' }
+          ]),
+          createScienceTopic('Diversidade de Ecossistemas e Seres Vivos', 'EF07CI07, EF07CI08', 'Exploração dos principais biomas brasileiros e a caracterização e importância dos vírus, bactérias, fungos e protozoários.', [
+            'https://www.youtube.com/embed/ZcOdBxnDylM',
+            'https://www.youtube.com/embed/Q-hAdfthiS8'
+          ], [
+            { videoTitle: 'Diversidade de Ecossistemas e Seres Vivos - Aprendendo Ciência', channelName: 'aprendendo ciencia', videoLink: 'https://youtu.be/ZcOdBxnDylM?si=pEYIdc189KC_8JYM' },
+            { videoTitle: 'Diversidade de Ecossistemas e Seres Vivos - Descomplica', channelName: 'descomplica', videoLink: 'https://youtu.be/Q-hAdfthiS8?si=QSqBnGl_lfi1PdHK' }
+          ]),
+          createScienceTopic('Saúde Pública e Vacinas', 'EF07CI09, EF07CI10, EF07CI11', 'Estudo dos programas de saúde pública, saneamento básico, histórico das vacinas e mecanismos de defesa do corpo humano.', [
+            'https://www.youtube.com/embed/LbMATf4I0vs',
+            'https://www.youtube.com/embed/ak7LF6tg28w'
+          ], [
+            { videoTitle: 'Saúde Pública e Vacinas - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/LbMATf4I0vs?si=BU0xfeL3n9tv9LaU' },
+            { videoTitle: 'Saúde Pública e Vacinas - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/ak7LF6tg28w?si=QvMsl5-Wl7CLw_wp' }
+          ]),
+          createScienceTopic('Composição do Ar, Efeito Estufa e Clima', 'EF07CI12, EF07CI13', 'Análise da atmosfera terrestre, efeito estufa natural, impacto da atividade humana e preservação da camada de ozônio.', [
+            'https://www.youtube.com/embed/-Bb5pkye798',
+            'https://www.youtube.com/embed/WrWN3eeN6d0',
+            'https://www.youtube.com/embed/D3YQ6zl3-2M'
+          ], [
+            { videoTitle: 'Composição do Ar, Efeito Estufa e Clima - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/-Bb5pkye798?si=8PJRB_HXtHJZEpnB' },
+            { videoTitle: 'Composição do Ar, Efeito Estufa e Clima - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/WrWN3eeN6d0?si=rWEhmZHh9c4GmsVT' },
+            { videoTitle: 'Composição do Ar, Efeito Estufa e Clima - Descomplica', channelName: 'descomplica', videoLink: 'https://youtu.be/D3YQ6zl3-2M?si=BDM62qMqg7fhl_n5' }
+          ]),
+          createScienceTopic('Placas Tectônicas e Deriva Continental', 'EF07CI14, EF07CI15, EF07CI16', 'Investigação da estrutura interna da Terra, teoria da deriva continental, dinâmica de placas tectônicas, terremotos e vulcões.', [
+            'https://www.youtube.com/embed/6Ea-OqwuVy8',
+            'https://www.youtube.com/embed/VmYLlST-xw0'
+          ], [
+            { videoTitle: 'Placas Tectônicas e Deriva Continental - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/6Ea-OqwuVy8?si=66xIakg97wPa5BBA' },
+            { videoTitle: 'Placas Tectônicas e Deriva Continental - Praticando Geografia', channelName: 'praticando geografia', videoLink: 'https://youtu.be/VmYLlST-xw0?si=mlR82TnWWx_0RgoJ' }
+          ]),
         ],
       },
       {
         year: 8,
         label: '8º ano',
         topics: [
-          createScienceTopic('Fontes e Tipos de Energia', 'EF08CI01, EF08CI02', 'Classificação de fontes de energia em renováveis e não renováveis, matrizes energéticas e o uso sustentável da energia.'),
-          createScienceTopic('Circuitos Elétricos e Consumo', 'EF08CI03, EF08CI04, EF08CI05', 'Funcionamento de circuitos elétricos residenciais, cálculo de consumo de eletricidade e práticas para o uso seguro de aparelhos.'),
-          createScienceTopic('Mecanismos de Reprodução', 'EF08CI07, EF08CI08', 'Estudo comparativo dos processos de reprodução sexuada e assexuada em plantas, animais e outros seres vivos.'),
-          createScienceTopic('Sexualidade, Hormônios e Puberdade', 'EF08CI09, EF08CI10, EF08CI11', 'O papel do sistema endócrino e hormônios na puberdade, métodos contraceptivos, prevenção de ISTs e dimensões da sexualidade.'),
-          createScienceTopic('Sistema Sol, Terra e Lua', 'EF08CI12, EF08CI13', 'Estudo dos movimentos celestes, fases da Lua, ocorrência de eclipses e a explicação científica para as estações do ano.'),
-          createScienceTopic('Clima e Previsão do Tempo', 'EF08CI14, EF08CI15, EF08CI16', 'Variáveis climáticas, dinâmica das massas de ar, circulação atmosférica e a importância da previsão do tempo.'),
+          createScienceTopic('Fontes e Tipos de Energia', 'EF08CI01, EF08CI02', 'Classificação de fontes de energia em renováveis e não renováveis, matrizes energéticas e o uso sustentável da energia.', [
+            'https://www.youtube.com/embed/6DF3GpAfJOU'
+          ], [
+            { videoTitle: 'Fontes e Tipos de Energia - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/6DF3GpAfJOU?si=OtTJOAdmzzPEWSlX' }
+          ]),
+          createScienceTopic('Circuitos Elétricos e Consumo', 'EF08CI03, EF08CI04, EF08CI05', 'Funcionamento de circuitos elétricos residenciais, cálculo de consumo de eletricidade e práticas para o uso seguro de aparelhos.', [
+            'https://www.youtube.com/embed/N0DnSlhijOU',
+            'https://www.youtube.com/embed/GDT1uVbethI'
+          ], [
+            { videoTitle: 'Circuitos Elétricos e Consumo - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/N0DnSlhijOU?si=MO46SibteBH9OAFc' },
+            { videoTitle: 'Circuitos Elétricos e Consumo - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/GDT1uVbethI?si=1DAym-s2H8_p9pR-' }
+          ]),
+          createScienceTopic('Mecanismos de Reprodução', 'EF08CI07, EF08CI08', 'Estudo comparativo dos processos de reprodução sexuada e assexuada em plantas, animais e outros seres vivos.', [
+            'https://www.youtube.com/embed/xQ9wchie9Pc'
+          ], [
+            { videoTitle: 'Mecanismos de Reprodução - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/xQ9wchie9Pc?si=ugCwrGLnOTdJgZto' }
+          ]),
+          createScienceTopic('Sexualidade, Hormônios e Puberdade', 'EF08CI09, EF08CI10, EF08CI11', 'O papel do sistema endócrino e hormônios na puberdade, métodos contraceptivos, prevenção de ISTs e dimensões da sexualidade.', [
+            'https://www.youtube.com/embed/oHaVYp4v5NI',
+            'https://www.youtube.com/embed/OAtZQll0gM4'
+          ], [
+            { videoTitle: 'Sexualidade, Hormônios e Puberdade - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/oHaVYp4v5NI?si=PKCWGnq7hikbiNOh' },
+            { videoTitle: 'Sexualidade, Hormônios e Puberdade - Minutos Psíquicos', channelName: 'minutos psiquicos', videoLink: 'https://youtu.be/OAtZQll0gM4?si=SfZjIojvEfI2lARO' }
+          ]),
+          createScienceTopic('Sistema Sol, Terra e Lua', 'EF08CI12, EF08CI13', 'Estudo dos movimentos celestes, fases da Lua, ocorrência de eclipses e a explicação científica para as estações do ano.', [
+            'https://www.youtube.com/embed/QTzyluDk_jI'
+          ], [
+            { videoTitle: 'Sistema Sol, Terra e Lua - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/QTzyluDk_jI?si=3I3eknaUhjQpMaOW' }
+          ]),
+          createScienceTopic('Clima e Previsão do Tempo', 'EF08CI14, EF08CI15, EF08CI16', 'Variáveis climáticas, dinâmica das massas de ar, circulação atmosférica e a importância da previsão do tempo.', [
+            'https://www.youtube.com/embed/ciWTNUeWADA',
+            'https://www.youtube.com/embed/debZ-ChunPE'
+          ], [
+            { videoTitle: 'Clima e Previsão do Tempo - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/ciWTNUeWADA?si=2r6Q0MueJg-B1vCN' },
+            { videoTitle: 'Clima e Previsão do Tempo - Canal Futura', channelName: 'canal futura', videoLink: 'https://youtu.be/debZ-ChunPE?si=U-2nv3FQQ7tiINh4' }
+          ]),
         ],
       },
       {
         year: 9,
         label: '9º ano',
         topics: [
-          createScienceTopic('Estrutura da Matéria e Modelos Atômicos', 'EF09CI01, EF09CI02, EF09CI03', 'Evolução dos modelos atômicos, estrutura básica da matéria, organização da tabela periódica e ligações químicas.'),
-          createScienceTopic('Leis Ponderais e Reações Químicas', 'EF09CI04, EF09CI05', 'Aspectos quantitativos das transformações químicas, balanceamento de equações e as leis ponderais da conservação da massa.'),
-          createScienceTopic('Radiação Eletromagnética e Tecnologia', 'EF09CI06, EF09CI07', 'Conceito de ondas eletromagnéticas, o espectro eletromagnético e suas aplicações na comunicação e medicina diagnóstica.'),
-          createScienceTopic('Hereditariedade e Genética', 'EF09CI08, EF09CI09', 'Fundamentos da hereditariedade, estrutura do DNA, cromossomos, as primeiras leis de Mendel e transmissão de características biológicas.'),
-          createScienceTopic('Evolução e Seleção Natural', 'EF09CI10 a EF09CI13', 'Análise das teorias evolucionistas de Lamarck e Darwin, seleção natural, especiação e a importância da preservação da biodiversidade.'),
-          createScienceTopic('Sistema Solar e Evolução Estelar', 'EF09CI14, EF09CI15, EF09CI16', 'Composição e estrutura do Sistema Solar, o ciclo evolutivo das estrelas e a localização da nossa galáxia no Universo.'),
-          createScienceTopic('Viagem Espacial e Astronomia Cultural', 'EF09CI17, EF09CI18', 'A história da exploração e viagens espaciais, tecnologia de telescópios e a interpretação do céu sob a ótica de diferentes culturas.'),
+          createScienceTopic('Estrutura da Matéria e Modelos Atômicos', 'EF09CI01, EF09CI02, EF09CI03', 'Evolução dos modelos atômicos, estrutura básica da matéria, organização da tabela periódica e ligações químicas.', [
+            'https://www.youtube.com/embed/fJJFZyau9b0',
+            'https://www.youtube.com/embed/lDrKIqubzdw'
+          ], [
+            { videoTitle: 'Estrutura da Matéria e Modelos Atômicos - Estudai Oficial', channelName: 'Estudai oficial', videoLink: 'https://youtu.be/fJJFZyau9b0?si=5wdNOVg3F-qpNIgc' },
+            { videoTitle: 'Estrutura da Matéria e Modelos Atômicos - Descomplica', channelName: 'Descomplica', videoLink: 'https://youtu.be/lDrKIqubzdw?si=vY7sdNzyQCY30hUW' }
+          ]),
+          createScienceTopic('Leis Ponderais e Reações Químicas', 'EF09CI04, EF09CI05', 'Aspectos quantitativos das transformações químicas, balanceamento de equações e as leis ponderais da conservação da massa.', [
+            'https://www.youtube.com/embed/d-5oHTPpS9w',
+            'https://www.youtube.com/embed/uMhJmoNlGz8'
+          ], [
+            { videoTitle: 'Leis Ponderais e Reações Químicas - Brasil Escola Oficial', channelName: 'Brasil escola oficial', videoLink: 'https://youtu.be/d-5oHTPpS9w?si=rvaAfGVCBGfu0mn9' },
+            { videoTitle: 'Leis Ponderais e Reações Químicas - Toda Matéria Oficial', channelName: 'Toda matéria oficial', videoLink: 'https://youtu.be/uMhJmoNlGz8?si=2s4HLudaWyIrQwdc' }
+          ]),
+          createScienceTopic('Radiação Eletromagnética e Tecnologia', 'EF09CI06, EF09CI07', 'Conceito de ondas eletromagnéticas, o espectro eletromagnético e suas aplicações na comunicação e medicina diagnóstica.', [
+            'https://www.youtube.com/embed/EuCQ7YdqHjE',
+            'https://www.youtube.com/embed/T8UH402P0dM'
+          ], [
+            { videoTitle: 'Radiação Eletromagnética e Tecnologia - Canal Futura', channelName: 'Canal futura', videoLink: 'https://youtu.be/EuCQ7YdqHjE?si=EpnCjDKQNpyTOmD_' },
+            { videoTitle: 'Radiação Eletromagnética e Tecnologia - Canal Futura', channelName: 'Canal futura', videoLink: 'https://youtu.be/T8UH402P0dM?si=vCD9s0NxBAtoH6JJ' }
+          ]),
+          createScienceTopic('Hereditariedade e Genética', 'EF09CI08, EF09CI09', 'Fundamentos da hereditariedade, estrutura do DNA, cromossomos, as primeiras leis de Mendel e transmissão de características biológicas.', [
+            'https://www.youtube.com/embed/ThrqdDzS6To',
+            'https://www.youtube.com/embed/-Vv3USW7iRU'
+          ], [
+            { videoTitle: 'Hereditariedade e Genética - Brasil Escola', channelName: 'Brasil escola', videoLink: 'https://youtu.be/ThrqdDzS6To?si=KS3iYaEEkrZNYzAu' },
+            { videoTitle: 'Hereditariedade e Genética - Descomplica', channelName: 'Descomplica', videoLink: 'https://youtu.be/-Vv3USW7iRU?si=23ds1XGlaBjIPK_h' }
+          ]),
+          createScienceTopic('Evolução e Seleção Natural', 'EF09CI10 a EF09CI13', 'Análise das teorias evolucionistas de Lamarck e Darwin, seleção natural, especiação e a importância da preservação da biodiversidade.', [
+            'https://www.youtube.com/embed/4WO-A_GaA1o',
+            'https://www.youtube.com/embed/WZ-u3NUMkXc'
+          ], [
+            { videoTitle: 'Evolução e Seleção Natural - Descomplica', channelName: 'Descomplica', videoLink: 'https://youtu.be/4WO-A_GaA1o?si=A69pp1iHZBl8IpBZ' },
+            { videoTitle: 'Evolução e Seleção Natural - Prof. Samuel Cunha', channelName: 'Professorsamuelcunha', videoLink: 'https://youtu.be/WZ-u3NUMkXc?si=gQ9zbvaojstuZ8MZ' }
+          ]),
+          createScienceTopic('Sistema Solar e Evolução Estelar', 'EF09CI14, EF09CI15, EF09CI16', 'Composição e estrutura do Sistema Solar, o ciclo evolutivo das estrelas e a localização da nossa galáxia no Universo.', [
+            'https://www.youtube.com/embed/GFsXnof_N_E'
+          ], [
+            { videoTitle: 'Sistema Solar e Evolução Estelar - Canal Futura', channelName: 'Canal futura', videoLink: 'https://youtu.be/GFsXnof_N_E?si=jtCYmEK-tY9w0t-g' }
+          ]),
+          createScienceTopic('Viagem Espacial e Astronomia Cultural', 'EF09CI17, EF09CI18', 'A história da exploração e viagens espaciais, tecnologia de telescópios e a interpretação do céu sob a ótica de diferentes culturas.', [
+            'https://www.youtube.com/embed/yQ4XlJaf8Zo',
+            'https://www.youtube.com/embed/z6_7TrUUdUE'
+          ], [
+            { videoTitle: 'Viagem Espacial e Astronomia Cultural - Canal Futura', channelName: 'Canal futura', videoLink: 'https://youtu.be/yQ4XlJaf8Zo?si=gTDKpZ8VBuVWXcuZ' },
+            { videoTitle: 'Viagem Espacial e Astronomia Cultural - Tinocando TV', channelName: 'Tinocando tv', videoLink: 'https://youtu.be/z6_7TrUUdUE?si=3v5GxwMWoAw4iG7S' }
+          ]),
         ],
       },
     ],
