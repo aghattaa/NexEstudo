@@ -41,31 +41,50 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [authLoading, setAuthLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
 
-  // Listen to Firebase auth state
+  // Listen to Firebase auth state — ALWAYS resolves authLoading
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
-      if (fbUser) {
-        setFirebaseUser(fbUser);
-        // Load profile from Firestore
-        const docRef = doc(db, 'users', fbUser.uid);
-        const snap = await getDoc(docRef);
-        if (snap.exists()) {
-          setUser(snap.data() as UserProfile);
+      try {
+        if (fbUser) {
+          setFirebaseUser(fbUser);
+          // Try to load profile from Firestore — but don't block auth if it fails
+          try {
+            const docRef = doc(db, 'users', fbUser.uid);
+            const snap = await getDoc(docRef);
+            if (snap.exists()) {
+              setUser(snap.data() as UserProfile);
+            } else {
+              // New user profile not saved yet — use Firebase Auth display name
+              setUser({
+                name: fbUser.displayName || 'Estudante',
+                email: fbUser.email || '',
+                learningPreference: null,
+              });
+            }
+          } catch (firestoreErr) {
+            // Firestore error should NOT block login — use fallback profile
+            console.warn('Firestore profile load failed, using fallback:', firestoreErr);
+            setUser({
+              name: fbUser.displayName || 'Estudante',
+              email: fbUser.email || '',
+              learningPreference: null,
+            });
+          }
+          setIsAuthenticated(true);
         } else {
-          // Fallback profile from Firebase Auth
-          setUser({
-            name: fbUser.displayName || 'Estudante',
-            email: fbUser.email || '',
-            learningPreference: null,
-          });
+          setFirebaseUser(null);
+          setUser(null);
+          setIsAuthenticated(false);
         }
-        setIsAuthenticated(true);
-      } else {
+      } catch (err) {
+        console.error('Auth state change error:', err);
         setFirebaseUser(null);
         setUser(null);
         setIsAuthenticated(false);
+      } finally {
+        // ALWAYS clear loading — this prevents the eternal black splash screen
+        setAuthLoading(false);
       }
-      setAuthLoading(false);
     });
     return unsubscribe;
   }, []);
@@ -75,6 +94,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
+      console.error('Login error:', err.code, err.message);
       const msg = translateFirebaseError(err.code);
       setAuthError(msg);
       throw err;
@@ -85,15 +105,27 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setAuthError(null);
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update Firebase Auth display name
       await updateProfile(cred.user, { displayName: name });
+      
+      // Save profile to Firestore — best effort, don't block registration if it fails
       const profile: UserProfile = {
         name,
         email,
         learningPreference: null,
       };
-      await setDoc(doc(db, 'users', cred.user.uid), profile);
+      try {
+        await setDoc(doc(db, 'users', cred.user.uid), profile);
+      } catch (firestoreErr) {
+        console.warn('Could not save profile to Firestore:', firestoreErr);
+        // Still continue — user IS created in Auth
+      }
+      
       setUser(profile);
+      // onAuthStateChanged will handle setIsAuthenticated(true)
     } catch (err: any) {
+      console.error('Register error:', err.code, err.message);
       const msg = translateFirebaseError(err.code);
       setAuthError(msg);
       throw err;
@@ -106,12 +138,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
       : { name: '', email: '', learningPreference: null, ...data } as UserProfile;
     setUser(merged);
     if (firebaseUser) {
-      await setDoc(doc(db, 'users', firebaseUser.uid), merged, { merge: true });
+      try {
+        await setDoc(doc(db, 'users', firebaseUser.uid), merged, { merge: true });
+      } catch (err) {
+        console.warn('Could not update profile in Firestore:', err);
+      }
     }
   };
 
   const logout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     setUser(null);
     setFirebaseUser(null);
     setIsAuthenticated(false);
@@ -152,8 +192,14 @@ function translateFirebaseError(code: string): string {
     case 'auth/too-many-requests':
       return 'Muitas tentativas. Aguarde um momento.';
     case 'auth/network-request-failed':
-      return 'Erro de rede. Verifique sua conexão.';
+      return 'Erro de rede. Verifique sua conexão com a internet.';
+    case 'auth/operation-not-allowed':
+      return 'Login com email/senha não está ativado. Ative no Firebase Console.';
+    case 'auth/user-disabled':
+      return 'Esta conta foi desativada.';
+    case 'auth/requires-recent-login':
+      return 'Por segurança, faça login novamente.';
     default:
-      return 'Ocorreu um erro. Tente novamente.';
+      return `Ocorreu um erro (${code || 'desconhecido'}). Verifique sua conexão e tente novamente.`;
   }
 }
