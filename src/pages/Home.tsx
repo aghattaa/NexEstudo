@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-nexus-bg overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-32 lg:py-40 flex items-center justify-center">
+      <section className="relative py-16 lg:py-40 flex items-center justify-center">
         {/* Abstract Background Elements */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] opacity-20 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-r from-nexus-blue-dark via-nexus-blue to-indigo-600 blur-[100px] rounded-full mix-blend-screen"></div>
@@ -19,7 +19,7 @@ export default function Home() {
             <Sparkles className="w-4 h-4" /> Plataforma de Aprendizado 2.0
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[1.1]">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-6 lg:mb-8 leading-[1.1]">
             Estude de forma <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500 drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]">
               inteligente e visual.
@@ -45,7 +45,7 @@ export default function Home() {
       </section>
 
       {/* Feature Bento Grid */}
-      <section className="py-24 relative z-10">
+      <section className="py-12 lg:py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             

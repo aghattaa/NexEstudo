@@ -33,7 +33,7 @@ export default function Aprender() {
             <span className="text-xs font-mono text-gray-300 uppercase tracking-widest">Trilhas de Conhecimento</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter leading-none mb-6">
             Escolha sua{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500 animate-text-shimmer drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]">
               Jornada
@@ -50,7 +50,7 @@ export default function Aprender() {
         </div>
 
         {/* ── SUBJECT CARDS ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-20">
           {subjects.map((subject, index) => (
             <div key={subject.id} className="h-full">
               {/* Force featured variant for all of them so they look massive and colorful */}

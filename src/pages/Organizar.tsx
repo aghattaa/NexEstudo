@@ -203,22 +203,22 @@ export default function Organizar() {
     <div className={`flex-1 flex flex-col md:flex-row min-h-screen bg-gradient-to-br transition-colors duration-1000 ${getTabColor()}`}>
       
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 lg:w-72 premium-glass p-6 flex flex-col z-20 shadow-2xl border-r border-white/10">
-        <h2 className="text-3xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-purple-400 drop-shadow-sm">
+      <aside className="w-full md:w-64 lg:w-72 premium-glass p-4 md:p-6 flex flex-col z-20 shadow-xl md:shadow-2xl border-b md:border-b-0 md:border-r border-white/10">
+        <h2 className="hidden md:block text-3xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-purple-400 drop-shadow-sm">
           Gestão Escolar
         </h2>
-        <nav className="space-y-3 flex-1">
-          <button onClick={() => setActiveTab('overview')} className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all font-bold ${activeTab === 'overview' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(139,92,246,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
-            <LayoutDashboard className="w-6 h-6" /> Visão Geral
+        <nav className="flex overflow-x-auto md:flex-col space-x-3 md:space-x-0 md:space-y-3 flex-1 pb-2 md:pb-0 scrollbar-hide">
+          <button onClick={() => setActiveTab('overview')} className={`flex items-center gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all font-bold whitespace-nowrap flex-shrink-0 ${activeTab === 'overview' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(139,92,246,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
+            <LayoutDashboard className="w-5 h-5 md:w-6 md:h-6" /> Visão Geral
           </button>
-          <button onClick={() => setActiveTab('schedule')} className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all font-bold ${activeTab === 'schedule' ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
-            <Grid className="w-6 h-6" /> Grade de Aulas
+          <button onClick={() => setActiveTab('schedule')} className={`flex items-center gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all font-bold whitespace-nowrap flex-shrink-0 ${activeTab === 'schedule' ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
+            <Grid className="w-5 h-5 md:w-6 md:h-6" /> Grade de Aulas
           </button>
-          <button onClick={() => setActiveTab('calendar')} className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all font-bold ${activeTab === 'calendar' ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
-            <CalendarDays className="w-6 h-6" /> Agenda Escolar
+          <button onClick={() => setActiveTab('calendar')} className={`flex items-center gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all font-bold whitespace-nowrap flex-shrink-0 ${activeTab === 'calendar' ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
+            <CalendarDays className="w-5 h-5 md:w-6 md:h-6" /> Agenda Escolar
           </button>
-          <button onClick={() => setActiveTab('grades')} className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all font-bold ${activeTab === 'grades' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
-            <GraduationCap className="w-6 h-6" /> Boletim & Notas
+          <button onClick={() => setActiveTab('grades')} className={`flex items-center gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all font-bold whitespace-nowrap flex-shrink-0 ${activeTab === 'grades' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] scale-105' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>
+            <GraduationCap className="w-5 h-5 md:w-6 md:h-6" /> Boletim & Notas
           </button>
         </nav>
       </aside>
@@ -229,9 +229,9 @@ export default function Organizar() {
         {/* OVERVIEW TAB */}
         {activeTab === 'overview' && (
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <header className="mb-10">
-              <h1 className="text-5xl font-extrabold text-white mb-3">Produtividade 🚀</h1>
-              <p className="text-gray-300 text-xl font-medium">Mantenha o foco absoluto e não perca suas metas.</p>
+            <header className="mb-10 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">Produtividade 🚀</h1>
+              <p className="text-gray-300 text-lg md:text-xl font-medium">Mantenha o foco absoluto e não perca suas metas.</p>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
@@ -310,51 +310,47 @@ export default function Organizar() {
         {/* SCHEDULE TAB (Grade de Aulas) */}
         {activeTab === 'schedule' && (
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-              <div>
-                <h1 className="text-5xl font-extrabold text-white mb-3">Grade de Aulas 📅</h1>
-                <p className="text-gray-300 text-xl font-medium">Clique em qualquer célula e preencha seus horários e matérias.</p>
-              </div>
-              <div className="flex gap-3 flex-wrap">
-                <button onClick={addScheduleRow} className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
-                  <Plus className="w-5 h-5" /> Adicionar Linha
-                </button>
-                <button onClick={clearSchedule} className="px-5 py-3 bg-rose-700/70 hover:bg-rose-600 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
-                  <Trash2 className="w-5 h-5" /> Limpar Tudo
-                </button>
-              </div>
+            <header className="mb-10 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">Grade de Aulas 📅</h1>
+              <p className="text-gray-300 text-lg md:text-xl font-medium">Configure seu horário exatamente como é na escola.</p>
             </header>
+            <div className="flex gap-3 flex-wrap mb-6">
+              <button onClick={addScheduleRow} className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
+                <Plus className="w-5 h-5" /> Adicionar Linha
+              </button>
+              <button onClick={clearSchedule} className="px-5 py-3 bg-rose-700/70 hover:bg-rose-600 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
+                <Trash2 className="w-5 h-5" /> Limpar Tudo
+              </button>
+            </div>
 
             <div className="premium-glass bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-[32px] overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.2)] border border-blue-500/30">
-              <div className="overflow-x-auto custom-scrollbar">
-                <table className="w-full text-left border-collapse min-w-[800px]">
+              <div className="w-full overflow-x-auto custom-scrollbar">
+                <table className="w-full text-left border-collapse min-w-[700px]">
                   <thead>
                     <tr>
-                      <th className="p-5 border-b border-r border-blue-500/20 bg-blue-950/50 w-36 text-center font-bold text-blue-200 text-base">Horário</th>
-                      {days.map(day => (
-                        <th key={day} className="p-5 border-b border-blue-500/20 bg-blue-950/50 font-black text-white text-center text-lg">{day}</th>
-                      ))}
-                      <th className="p-5 border-b border-blue-500/20 bg-blue-950/50 w-12"></th>
+                      <th className="p-4 border-b border-blue-500/20 text-blue-300 font-bold uppercase tracking-widest text-xs w-32 bg-blue-950/40 rounded-tl-xl">Horário</th>
+                      {days.map(d => <th key={d} className="p-4 border-b border-blue-500/20 text-blue-300 font-bold uppercase tracking-widest text-xs text-center bg-blue-950/40">{d}</th>)}
+                      <th className="p-4 border-b border-blue-500/20 bg-blue-950/40 rounded-tr-xl w-12"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {scheduleRows.map((row) => (
-                      <tr key={row.id} className="border-b border-blue-500/10 hover:bg-blue-900/10 transition-colors">
-                        <td className="p-3 border-r border-blue-500/20">
+                      <tr key={row.id} className="border-b border-blue-500/10 hover:bg-blue-500/5 transition-colors group">
+                        <td className="p-3 border-r border-blue-500/10">
                           <input
                             type="text"
                             value={row.time}
                             onChange={(e) => updateScheduleCell(row.id, 'time', e.target.value)}
-                            placeholder="07:30"
-                            className="w-full bg-blue-950/60 border-2 border-cyan-500/50 rounded-lg px-3 py-2 text-cyan-300 font-bold text-center placeholder-cyan-700 focus:outline-none focus:border-cyan-400 focus:bg-blue-950/80 transition-all font-mono text-sm"
+                            placeholder="07:00"
+                            className="w-full bg-blue-950/60 border-2 border-blue-500/40 rounded-lg px-3 py-2 text-white font-bold text-center focus:outline-none focus:border-blue-400 focus:bg-blue-950/80 transition-all text-sm"
                           />
                         </td>
                         {days.map(day => (
                           <td key={day} className="p-3 border-r border-blue-500/10">
                             <input
                               type="text"
-                              value={row[day]}
-                              onChange={(e) => updateScheduleCell(row.id, day, e.target.value)}
+                              value={row[day as keyof ScheduleRow]}
+                              onChange={(e) => updateScheduleCell(row.id, day as keyof ScheduleRow, e.target.value)}
                               placeholder="Matéria"
                               className="w-full bg-blue-950/60 border-2 border-blue-500/40 rounded-lg px-3 py-2 text-white font-semibold text-center placeholder-blue-600 focus:outline-none focus:border-blue-400 focus:bg-blue-950/80 transition-all text-sm"
                             />
@@ -378,9 +374,9 @@ export default function Organizar() {
         {/* CALENDAR TAB */}
         {activeTab === 'calendar' && (
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <header className="mb-10">
-              <h1 className="text-5xl font-extrabold text-white mb-3">Agenda & Entregas 📝</h1>
-              <p className="text-gray-300 text-xl font-medium">Controle total dos seus trabalhos e provas.</p>
+            <header className="mb-10 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">Agenda & Entregas 📝</h1>
+              <p className="text-gray-300 text-lg md:text-xl font-medium">Controle total dos seus trabalhos e provas.</p>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -424,9 +420,9 @@ export default function Organizar() {
                     <button className="p-3 bg-rose-500/20 text-rose-300 rounded-xl hover:bg-rose-500/40 transition-colors"><ChevronRight className="w-6 h-6" /></button>
                   </div>
                 </div>
-                <div className="grid grid-cols-7 gap-3">
+                <div className="grid grid-cols-7 gap-1 md:gap-3">
                   {['DOM','SEG','TER','QUA','QUI','SEX','SAB'].map(d => (
-                    <div key={d} className="text-center font-black text-rose-300/60 pb-4 text-sm tracking-widest">{d}</div>
+                    <div key={d} className="text-center font-black text-rose-300/60 pb-2 md:pb-4 text-[10px] md:text-sm tracking-widest">{d}</div>
                   ))}
                   {Array.from({ length: 31 }).map((_, i) => {
                     const day = i + 1;
@@ -446,10 +442,10 @@ export default function Organizar() {
         {/* GRADES TAB */}
         {activeTab === 'grades' && (
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <header className="mb-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left">
               <div>
-                <h1 className="text-5xl font-extrabold text-white mb-3">Boletim Escolar 🎓</h1>
-                <p className="text-gray-300 text-xl font-medium">Suas notas calculadas automaticamente.</p>
+                <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">Boletim Escolar 🎓</h1>
+                <p className="text-gray-300 text-lg md:text-xl font-medium">Suas notas calculadas automaticamente.</p>
               </div>
               <button onClick={addNewGradeSubject} className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white rounded-xl font-bold shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all flex items-center gap-2">
                 <Plus className="w-5 h-5" /> Nova Disciplina
@@ -509,13 +505,13 @@ export default function Organizar() {
             </div>
 
             {/* Status Geral */}
-            <div className="premium-glass bg-gradient-to-r from-emerald-600/20 to-teal-600/20 border border-emerald-400/30 rounded-3xl p-8 flex items-center gap-6">
-               <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.5)]">
+            <div className="premium-glass bg-gradient-to-r from-emerald-600/20 to-teal-600/20 border border-emerald-400/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+               <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.5)] shrink-0">
                  <Calculator className="w-8 h-8 text-white" />
                </div>
                <div>
-                 <h3 className="text-3xl font-black text-white mb-2">Simulador Ativo</h3>
-                 <p className="text-emerald-100/80 text-lg">As médias são calculadas em tempo real. Digite suas notas acima para prever se você vai passar de ano!</p>
+                 <h3 className="text-2xl md:text-3xl font-black text-white mb-2">Simulador Ativo</h3>
+                 <p className="text-emerald-100/80 text-base md:text-lg">As médias são calculadas em tempo real. Digite suas notas acima para prever se você vai passar de ano!</p>
                </div>
             </div>
           </div>

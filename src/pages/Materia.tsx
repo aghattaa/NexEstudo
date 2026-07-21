@@ -41,17 +41,17 @@ export default function Materia() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row flex-1 border-t border-white/10 h-full bg-transparent overflow-hidden">
+    <div className="flex flex-col md:flex-row flex-1 border-t border-white/10 h-full bg-transparent overflow-y-auto md:overflow-hidden pb-16 md:pb-0">
 
       {/* Ultra Premium Sidebar */}
-      <aside className="w-full md:w-[360px] lg:w-[400px] flex flex-col bg-[#09090b]/90 backdrop-blur-3xl border-r border-white/10 relative z-20 shadow-[30px_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
+      <aside className="w-full h-[35vh] md:h-auto md:w-[360px] lg:w-[400px] flex flex-col shrink-0 bg-[#09090b]/90 backdrop-blur-3xl border-b md:border-b-0 md:border-r border-white/10 relative z-20 shadow-[30px_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
         {/* Intense Animated Glow Background */}
         <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[500px] opacity-30 animate-pulse-slow pointer-events-none" style={{ background: `radial-gradient(ellipse at top center, ${subject.accentColor}, transparent 70%)`, filter: 'blur(60px)' }}></div>
         <div className="absolute bottom-0 right-0 w-full h-[300px] opacity-10 pointer-events-none" style={{ background: `radial-gradient(circle at bottom right, ${subject.color.split(' ')[1]?.replace('from-', '') || subject.accentColor}, transparent 70%)`, filter: 'blur(50px)' }}></div>
 
-        <div className="p-8 pb-6 relative z-10 flex flex-col shrink-0">
-          <Link to="/aprender" className="inline-flex items-center gap-2 text-gray-500 hover:text-white mb-8 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:-translate-x-1 w-fit bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:bg-white/10">
-            <ArrowLeft className="w-3.5 h-3.5" /> Voltar ao Painel
+        <div className="p-4 md:p-8 pb-4 md:pb-6 relative z-10 flex flex-col shrink-0">
+          <Link to="/aprender" className="inline-flex items-center gap-2 text-gray-500 hover:text-white mb-4 md:mb-8 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] transition-all hover:-translate-x-1 w-fit bg-white/5 px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/5 hover:bg-white/10">
+            <ArrowLeft className="w-3.5 h-3.5" /> Voltar
           </Link>
 
           <div className="flex items-center gap-5">

@@ -157,8 +157,8 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         </div>
 
         {/* Right Side - Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative z-20">
-          <div className="w-full max-w-[460px] bg-white/10 backdrop-blur-2xl p-10 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-white/20 relative overflow-hidden group">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 md:p-6 relative z-20">
+          <div className="w-full max-w-[460px] bg-white/10 backdrop-blur-2xl p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-white/20 relative overflow-hidden group">
             <div className="absolute -top-32 -right-32 w-64 h-64 bg-fuchsia-500/30 blur-[80px] rounded-full pointer-events-none group-hover:bg-cyan-500/30 transition-colors duration-1000"></div>
 
             {/* Toggle Login/Register */}

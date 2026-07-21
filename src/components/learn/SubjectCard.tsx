@@ -17,7 +17,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
       <Link
         to={`/aprender/${subject.id}`}
         className={`
-          group relative overflow-hidden rounded-[36px] flex flex-col h-full min-h-[420px]
+          group relative overflow-hidden rounded-[36px] flex flex-col h-full min-h-[340px] md:min-h-[420px]
           deep-glass border border-white/6 hover:border-white/14
           transition-all duration-500 hover:-translate-y-2
           animate-reveal ${delay}
@@ -91,7 +91,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
             <p className="text-sm font-bold text-gray-300 mb-5 truncate">{subject.lastTopic}</p>
 
             {/* Subject name */}
-            <h3 className="text-4xl font-black text-white tracking-tight mb-2 leading-none">{subject.name}</h3>
+            <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-2 leading-none">{subject.name}</h3>
             <p className="text-sm text-gray-400 leading-relaxed mb-6">{subject.description}</p>
 
             {/* Stats row */}
