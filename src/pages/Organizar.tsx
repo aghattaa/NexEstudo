@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Target, Clock, Calendar as CalendarIcon, GraduationCap, Grid, Play, Pause, RotateCcw, Plus, CheckCircle2, TrendingUp, Briefcase, PlusCircle, Check, LayoutDashboard, CalendarDays, BookOpen, Calculator, ChevronRight, ChevronLeft, Save, Edit3, Trash2 } from 'lucide-react';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { useUser } from '../contexts/UserContext';
 
 type TabType = 'overview' | 'schedule' | 'calendar' | 'grades';
 
 export default function Organizar() {
+  const { firebaseUser } = useUser();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
   // --- OVERVIEW / POMODORO STATE ---
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -52,37 +58,115 @@ export default function Organizar() {
   }
 
   // --- SCHEDULE STATE ---
-  const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
-  const times = ['07:30', '08:20', '09:10', '10:20', '11:10'];
-  const [isEditingSchedule, setIsEditingSchedule] = useState(false);
-  const [scheduleData, setScheduleData] = useState<Record<string, Record<string, string>>>({
-    '07:30': { 'Segunda': 'Matemática', 'Terça': 'Português', 'Quarta': 'História', 'Quinta': 'Ciências', 'Sexta': 'Geografia' },
-    '08:20': { 'Segunda': 'Matemática', 'Terça': 'Português', 'Quarta': 'História', 'Quinta': 'Ciências', 'Sexta': 'Geografia' },
-    '09:10': { 'Segunda': 'Física', 'Terça': 'Inglês', 'Quarta': 'Educação Física', 'Quinta': 'Artes', 'Sexta': 'Matemática' },
-    '10:20': { 'Segunda': 'Química', 'Terça': 'Inglês', 'Quarta': 'Filosofia', 'Quinta': 'Sociologia', 'Sexta': 'Português' },
-    '11:10': { 'Segunda': 'Biologia', 'Terça': 'Redação', 'Quarta': 'Geometria', 'Quinta': 'Linguagens', 'Sexta': 'Português' },
-  });
+  const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'] as const;
 
-  const updateSchedule = (time: string, day: string, value: string) => {
-    setScheduleData(prev => ({
-      ...prev,
-      [time]: { ...prev[time], [day]: value }
-    }));
-  };
+  type ScheduleRow = { id: number; time: string; Segunda: string; Terça: string; Quarta: string; Quinta: string; Sexta: string };
+
+  const defaultRows = (): ScheduleRow[] => [
+    { id: 1, time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' },
+    { id: 2, time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' },
+    { id: 3, time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' },
+    { id: 4, time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' },
+    { id: 5, time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' },
+  ];
+
+  const [scheduleRows, setScheduleRows] = useState<ScheduleRow[]>(defaultRows);
 
   // --- GRADES STATE ---
-  const [grades, setGrades] = useState([
-    { id: 1, subject: 'Matemática', b1: '8.5', b2: '7.0', b3: '', b4: '' },
-    { id: 2, subject: 'Português', b1: '9.0', b2: '8.5', b3: '', b4: '' },
-    { id: 3, subject: 'Ciências', b1: '7.5', b2: '8.0', b3: '', b4: '' },
-    { id: 4, subject: 'História', b1: '10.0', b2: '9.5', b3: '', b4: '' },
+  const [grades, setGrades] = useState<{ id: number, subject: string, b1: string, b2: string, b3: string, b4: string }[]>([
+    { id: 1, subject: 'Matemática', b1: '', b2: '', b3: '', b4: '' },
+    { id: 2, subject: 'Português', b1: '', b2: '', b3: '', b4: '' },
+    { id: 3, subject: 'Ciências', b1: '', b2: '', b3: '', b4: '' },
+    { id: 4, subject: 'História', b1: '', b2: '', b3: '', b4: '' },
   ]);
 
+  // --- CALENDAR STATE ---
+  const [events, setEvents] = useState<{ id: number, title: string, date: string, type: string, urgency: string, color: string }[]>([]);
+  const [newEventTitle, setNewEventTitle] = useState('');
+  const [newEventDate, setNewEventDate] = useState('');
+
+  // --- LOAD FROM FIRESTORE ON MOUNT ---
+  useEffect(() => {
+    if (!firebaseUser) return;
+    const loadData = async () => {
+      try {
+        const snap = await getDoc(doc(db, 'users', firebaseUser.uid, 'organizer', 'data'));
+        if (snap.exists()) {
+          const d = snap.data();
+          if (d.scheduleRows && d.scheduleRows.length > 0) setScheduleRows(d.scheduleRows);
+          if (d.grades && d.grades.length > 0) setGrades(d.grades);
+          if (d.events) setEvents(d.events);
+        }
+      } catch (err) {
+        console.error('Error loading organizer data:', err);
+      } finally {
+        setDataLoaded(true);
+      }
+    };
+    loadData();
+  }, [firebaseUser]);
+
+  // --- DEBOUNCED SAVE TO FIRESTORE ---
+  const saveTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const saveToFirestore = useCallback((data: { scheduleRows?: ScheduleRow[], grades?: any[], events?: any[] }) => {
+    if (!firebaseUser) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(async () => {
+      try {
+        await setDoc(
+          doc(db, 'users', firebaseUser.uid, 'organizer', 'data'),
+          data,
+          { merge: true }
+        );
+      } catch (err) {
+        console.error('Error saving organizer data:', err);
+      }
+    }, 1000);
+  }, [firebaseUser]);
+
+  // Auto-save when data changes (only after initial load)
+  useEffect(() => {
+    if (!dataLoaded) return;
+    saveToFirestore({ scheduleRows });
+  }, [scheduleRows, dataLoaded]);
+
+  useEffect(() => {
+    if (!dataLoaded) return;
+    saveToFirestore({ grades });
+  }, [grades, dataLoaded]);
+
+  useEffect(() => {
+    if (!dataLoaded) return;
+    saveToFirestore({ events });
+  }, [events, dataLoaded]);
+
+  // --- SCHEDULE ACTIONS ---
+  const updateScheduleCell = (id: number, field: keyof ScheduleRow, value: string) => {
+    setScheduleRows(prev => prev.map(row => row.id === id ? { ...row, [field]: value } : row));
+  };
+
+  const addScheduleRow = () => {
+    setScheduleRows(prev => [...prev, { id: Date.now(), time: '', Segunda: '', Terça: '', Quarta: '', Quinta: '', Sexta: '' }]);
+  };
+
+  const deleteScheduleRow = (id: number) => {
+    setScheduleRows(prev => prev.filter(row => row.id !== id));
+  };
+
+  const clearSchedule = () => {
+    setScheduleRows(defaultRows());
+  };
+
+  // --- GRADES ACTIONS ---
   const updateGrade = (id: number, field: 'b1'|'b2'|'b3'|'b4'|'subject', value: string) => {
     setGrades(grades.map(g => g.id === id ? { ...g, [field]: value } : g));
   };
   const addNewGradeSubject = () => {
     setGrades([...grades, { id: Date.now(), subject: 'Nova Disciplina', b1: '', b2: '', b3: '', b4: '' }]);
+  };
+  const deleteGradeSubject = (id: number) => {
+    setGrades(grades.filter(g => g.id !== id));
   };
 
   const calculateAverage = (g: any) => {
@@ -91,21 +175,18 @@ export default function Organizar() {
     return (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
   };
 
-  // --- CALENDAR STATE ---
-  const [events, setEvents] = useState([
-    { id: 1, title: 'Prova de Matemática', date: '15 Mai', type: 'Prova', urgency: 'Alta', color: 'red' },
-    { id: 2, title: 'Entrega de Ciências', date: '18 Mai', type: 'Trabalho', urgency: 'Média', color: 'amber' },
-    { id: 3, title: 'Apresentação de Artes', date: '22 Mai', type: 'Projeto', urgency: 'Baixa', color: 'emerald' },
-  ]);
-  const [newEventTitle, setNewEventTitle] = useState('');
-  const [newEventDate, setNewEventDate] = useState('');
-
+  // --- EVENTS ACTIONS ---
   const addEvent = () => {
     if(!newEventTitle || !newEventDate) return;
     setEvents([...events, { id: Date.now(), title: newEventTitle, date: newEventDate, type: 'Tarefa', urgency: 'Média', color: 'blue' }]);
     setNewEventTitle('');
     setNewEventDate('');
   };
+
+  const deleteEvent = (id: number) => {
+    setEvents(events.filter(e => e.id !== id));
+  };
+
 
   // Colorful Backgrounds per active tab
   const getTabColor = () => {
@@ -232,11 +313,16 @@ export default function Organizar() {
             <header className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
               <div>
                 <h1 className="text-5xl font-extrabold text-white mb-3">Grade de Aulas 📅</h1>
-                <p className="text-gray-300 text-xl font-medium">Sua rotina escolar semanal totalmente personalizada.</p>
+                <p className="text-gray-300 text-xl font-medium">Clique em qualquer célula e preencha seus horários e matérias.</p>
               </div>
-              <button onClick={() => setIsEditingSchedule(!isEditingSchedule)} className={`px-6 py-3 rounded-xl font-bold transition-all shadow-lg flex items-center gap-2 ${isEditingSchedule ? 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-emerald-500/30' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/30'}`}>
-                {isEditingSchedule ? <><Save className="w-5 h-5" /> Salvar Grade</> : <><Edit3 className="w-5 h-5" /> Editar Grade</>}
-              </button>
+              <div className="flex gap-3 flex-wrap">
+                <button onClick={addScheduleRow} className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
+                  <Plus className="w-5 h-5" /> Adicionar Linha
+                </button>
+                <button onClick={clearSchedule} className="px-5 py-3 bg-rose-700/70 hover:bg-rose-600 text-white rounded-xl font-bold shadow-lg flex items-center gap-2 transition-all">
+                  <Trash2 className="w-5 h-5" /> Limpar Tudo
+                </button>
+              </div>
             </header>
 
             <div className="premium-glass bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-[32px] overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.2)] border border-blue-500/30">
@@ -244,38 +330,48 @@ export default function Organizar() {
                 <table className="w-full text-left border-collapse min-w-[800px]">
                   <thead>
                     <tr>
-                      <th className="p-5 border-b border-r border-blue-500/20 bg-blue-950/50 w-28 text-center font-bold text-blue-200">Horário</th>
+                      <th className="p-5 border-b border-r border-blue-500/20 bg-blue-950/50 w-36 text-center font-bold text-blue-200 text-base">Horário</th>
                       {days.map(day => (
                         <th key={day} className="p-5 border-b border-blue-500/20 bg-blue-950/50 font-black text-white text-center text-lg">{day}</th>
                       ))}
+                      <th className="p-5 border-b border-blue-500/20 bg-blue-950/50 w-12"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {times.map(time => (
-                      <tr key={time} className="hover:bg-blue-900/20 transition-colors">
-                        <td className="p-5 border-b border-r border-blue-500/20 font-mono text-cyan-400 text-center font-bold text-lg">{time}</td>
+                    {scheduleRows.map((row) => (
+                      <tr key={row.id} className="border-b border-blue-500/10 hover:bg-blue-900/10 transition-colors">
+                        <td className="p-3 border-r border-blue-500/20">
+                          <input
+                            type="text"
+                            value={row.time}
+                            onChange={(e) => updateScheduleCell(row.id, 'time', e.target.value)}
+                            placeholder="07:30"
+                            className="w-full bg-blue-950/60 border-2 border-cyan-500/50 rounded-lg px-3 py-2 text-cyan-300 font-bold text-center placeholder-cyan-700 focus:outline-none focus:border-cyan-400 focus:bg-blue-950/80 transition-all font-mono text-sm"
+                          />
+                        </td>
                         {days.map(day => (
-                          <td key={day} className="p-5 border-b border-blue-500/20 text-center">
-                            {isEditingSchedule ? (
-                              <input 
-                                type="text"
-                                value={scheduleData[time][day]}
-                                onChange={(e) => updateSchedule(time, day, e.target.value)}
-                                className="w-full bg-black/50 border border-blue-400/50 rounded-lg px-3 py-2 text-white font-bold text-center focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/50 transition-all"
-                              />
-                            ) : (
-                              <div className="inline-flex items-center justify-center px-4 py-2.5 bg-blue-500/10 border border-blue-500/20 rounded-xl font-bold text-white w-full hover:bg-blue-500/20 transition-all">
-                                {scheduleData[time][day]}
-                              </div>
-                            )}
+                          <td key={day} className="p-3 border-r border-blue-500/10">
+                            <input
+                              type="text"
+                              value={row[day]}
+                              onChange={(e) => updateScheduleCell(row.id, day, e.target.value)}
+                              placeholder="Matéria"
+                              className="w-full bg-blue-950/60 border-2 border-blue-500/40 rounded-lg px-3 py-2 text-white font-semibold text-center placeholder-blue-600 focus:outline-none focus:border-blue-400 focus:bg-blue-950/80 transition-all text-sm"
+                            />
                           </td>
                         ))}
+                        <td className="p-3 text-center">
+                          <button onClick={() => deleteScheduleRow(row.id)} className="text-red-500/60 hover:text-red-400 transition-colors p-1">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
+            <p className="text-center text-blue-400/60 text-sm mt-4 font-medium">✏️ Clique em qualquer campo para editar • As alterações são salvas automaticamente</p>
           </div>
         )}
 
@@ -306,6 +402,9 @@ export default function Organizar() {
                       <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${ev.color === 'red' ? 'bg-red-500' : ev.color === 'amber' ? 'bg-amber-500' : ev.color === 'emerald' ? 'bg-emerald-500' : 'bg-blue-500'}`}></div>
                       <div className="flex justify-between items-start mb-3">
                         <span className={`text-sm font-black uppercase tracking-wider text-${ev.color}-400`}>{ev.date}</span>
+                        <button onClick={() => deleteEvent(ev.id)} className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                       <h4 className="text-xl font-bold text-white mb-2">{ev.title}</h4>
                       <p className="text-sm text-gray-400 flex items-center gap-2 font-medium">
@@ -375,11 +474,14 @@ export default function Organizar() {
                       const avg = calculateAverage(g);
                       const isPassing = avg !== '-' && parseFloat(avg) >= 6.0;
                       return (
-                        <tr key={g.id} className="hover:bg-emerald-900/20 transition-colors">
+                        <tr key={g.id} className="hover:bg-emerald-900/20 transition-colors group">
                           <td className="p-4 border-b border-r border-emerald-500/20 font-bold text-white">
                             <div className="flex items-center gap-3">
                               <BookOpen className="w-5 h-5 text-emerald-400" />
                               <input type="text" value={g.subject} onChange={(e) => updateGrade(g.id, 'subject', e.target.value)} className="bg-transparent border-b border-transparent focus:border-emerald-400 focus:outline-none w-full text-lg" />
+                              <button onClick={() => deleteGradeSubject(g.id)} className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity p-1 ml-auto">
+                                <Trash2 className="w-4 h-4" />
+                              </button>
                             </div>
                           </td>
                           {['b1', 'b2', 'b3', 'b4'].map((bim) => (
