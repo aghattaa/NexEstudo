@@ -108,38 +108,52 @@ export default function Organizar() {
 
   // --- DEBOUNCED SAVE TO FIRESTORE ---
   const saveTimer = useRef<NodeJS.Timeout | null>(null);
+  const pendingData = useRef<{ scheduleRows?: ScheduleRow[], grades?: any[], events?: any[] }>({});
+  const isInitialLoad = useRef(true);
 
   const saveToFirestore = useCallback((data: { scheduleRows?: ScheduleRow[], grades?: any[], events?: any[] }) => {
     if (!firebaseUser) return;
+    
+    // Accumulate changes
+    pendingData.current = { ...pendingData.current, ...data };
+
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
+      const dataToSave = { ...pendingData.current };
+      pendingData.current = {}; // clear pending
+      
       try {
         await setDoc(
           doc(db, 'users', firebaseUser.uid, 'organizer', 'data'),
-          data,
+          dataToSave,
           { merge: true }
         );
       } catch (err) {
         console.error('Error saving organizer data:', err);
       }
-    }, 1000);
+    }, 1500);
   }, [firebaseUser]);
 
   // Auto-save when data changes (only after initial load)
   useEffect(() => {
     if (!dataLoaded) return;
+    if (isInitialLoad.current) {
+      // Skip the very first effect run after data load to prevent saving what we just loaded
+      const timer = setTimeout(() => { isInitialLoad.current = false; }, 500);
+      return () => clearTimeout(timer);
+    }
     saveToFirestore({ scheduleRows });
-  }, [scheduleRows, dataLoaded]);
+  }, [scheduleRows, dataLoaded, saveToFirestore]);
 
   useEffect(() => {
-    if (!dataLoaded) return;
+    if (!dataLoaded || isInitialLoad.current) return;
     saveToFirestore({ grades });
-  }, [grades, dataLoaded]);
+  }, [grades, dataLoaded, saveToFirestore]);
 
   useEffect(() => {
-    if (!dataLoaded) return;
+    if (!dataLoaded || isInitialLoad.current) return;
     saveToFirestore({ events });
-  }, [events, dataLoaded]);
+  }, [events, dataLoaded, saveToFirestore]);
 
   // --- SCHEDULE ACTIONS ---
   const updateScheduleCell = (id: number, field: keyof ScheduleRow, value: string) => {
