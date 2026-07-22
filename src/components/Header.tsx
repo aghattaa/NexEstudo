@@ -41,13 +41,12 @@ export default function Header() {
     <>
       <header className="h-16 md:h-20 border-b border-nexus-blue-dark/20 px-4 md:px-8 flex items-center justify-between bg-nexus-dark/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-nexus-blue-dark to-nexus-blue-gradient-dark rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.4)]">
-              <Rocket className="w-4 h-4 md:w-5 md:h-5 text-white" />
-            </div>
-            <span className="text-xl md:text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-500 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]">
-              NEX ESTUDO
-            </span>
+          <Link to="/" className="flex items-center gap-3 group">
+            <img 
+              src="/logo.png" 
+              alt="NexEstudo Logo" 
+              className="h-10 md:h-12 w-auto object-contain rounded-full shadow-[0_0_15px_rgba(14,165,233,0.3)] group-hover:scale-105 transition-transform"
+            />
           </Link>
 
           <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-400 items-center">

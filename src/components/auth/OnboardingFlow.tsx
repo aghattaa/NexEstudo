@@ -131,12 +131,13 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         <div className="hidden lg:flex w-1/2 relative items-center justify-center p-12">
           <div className="relative z-10 w-full max-w-lg aspect-square flex items-center justify-center">
             <div className="absolute z-20 w-80 h-96 bg-white/10 backdrop-blur-3xl rounded-[40px] border border-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)] flex flex-col items-center justify-center p-8 animate-float">
-              <div className="w-24 h-24 bg-gradient-to-br from-fuchsia-500 to-orange-500 rounded-3xl flex items-center justify-center shadow-2xl mb-6">
-                <Sparkles className="w-12 h-12 text-white drop-shadow-md" />
+              <div className="w-40 h-40 bg-transparent rounded-full flex items-center justify-center shadow-2xl mb-6 relative group overflow-hidden">
+                <img 
+                  src="/logo.png" 
+                  alt="NexEstudo Logo" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
               </div>
-              <h2 className="text-4xl font-black text-white text-center tracking-tight leading-none mb-2 drop-shadow-lg">
-                NEX<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">ESTUDO</span>
-              </h2>
               <p className="text-white/70 font-medium text-center text-sm mt-2">O futuro do aprendizado é agora.</p>
             </div>
             <div className="absolute z-10 top-10 right-10 w-32 h-32 bg-cyan-500/20 backdrop-blur-2xl rounded-3xl border border-cyan-400/30 flex items-center justify-center animate-bounce shadow-2xl" style={{ animationDuration: '4s' }}>
