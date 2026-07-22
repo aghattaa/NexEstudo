@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Calendar, Rocket, UserIcon, LogOut, Settings, ChevronDown, Home as HomeIcon } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
+import { useStudentProgress } from '../hooks/useStudentProgress';
 
 export default function Header() {
   const location = useLocation();
   const { user, logout } = useUser();
+  const { progress } = useStudentProgress();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +106,7 @@ export default function Header() {
                 </div>
                 <div className="flex justify-between items-center bg-white/5 px-4 py-3 rounded-2xl">
                   <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest">Nível</span>
-                  <span className="text-xs md:text-sm font-black text-emerald-400">14 Mestre</span>
+                  <span className="text-xs md:text-sm font-black text-emerald-400">{progress.level} {progress.levelName}</span>
                 </div>
               </div>
 

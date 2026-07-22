@@ -44,7 +44,7 @@ export default function Materia() {
     <div className="flex flex-col md:flex-row flex-1 border-t border-white/10 h-full bg-transparent overflow-y-auto md:overflow-hidden pb-16 md:pb-0">
 
       {/* Ultra Premium Sidebar */}
-      <aside className="w-full h-[35vh] md:h-auto md:w-[360px] lg:w-[400px] flex flex-col shrink-0 bg-[#09090b]/90 backdrop-blur-3xl border-b md:border-b-0 md:border-r border-white/10 relative z-20 shadow-[30px_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
+      <aside className="w-full h-auto md:h-auto md:w-[360px] lg:w-[400px] flex flex-col shrink-0 bg-[#09090b]/90 backdrop-blur-3xl border-b md:border-b-0 md:border-r border-white/10 relative z-20 shadow-[30px_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
         {/* Intense Animated Glow Background */}
         <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[500px] opacity-30 animate-pulse-slow pointer-events-none" style={{ background: `radial-gradient(ellipse at top center, ${subject.accentColor}, transparent 70%)`, filter: 'blur(60px)' }}></div>
         <div className="absolute bottom-0 right-0 w-full h-[300px] opacity-10 pointer-events-none" style={{ background: `radial-gradient(circle at bottom right, ${subject.color.split(' ')[1]?.replace('from-', '') || subject.accentColor}, transparent 70%)`, filter: 'blur(50px)' }}></div>
@@ -101,7 +101,7 @@ export default function Materia() {
         </div>
 
         {/* Topics List for SELECTED year only */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 pb-10 relative z-10">
+        <div className="flex-1 overflow-y-visible md:overflow-y-auto custom-scrollbar px-6 pb-10 relative z-10">
           {(() => {
             const currentYearData = data.anosFinais.find(a => a.year === selectedYear) || data.anosFinais[0];
             return (

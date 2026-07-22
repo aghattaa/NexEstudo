@@ -109,12 +109,12 @@ const generateDailyMissions = (): DailyMission[] => [
 ];
 
 const DEFAULT_STATE: StudentProgress = {
-  name: 'Gabriel Souza',
-  level: 14,
-  levelName: LEVEL_NAMES[14],
-  xp: 780,
-  xpNextLevel: XP_PER_LEVEL(14),
-  streak: 7,
+  name: 'Estudante',
+  level: 1,
+  levelName: LEVEL_NAMES[1],
+  xp: 0,
+  xpNextLevel: XP_PER_LEVEL(1),
+  streak: 0,
   lastStudied: null,
   completedTopics: [],
   dailyMissions: generateDailyMissions(),
