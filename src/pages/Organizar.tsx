@@ -317,6 +317,24 @@ export default function Organizar() {
                   {goals.length === 0 && <p className="text-gray-400 text-center py-6 font-medium">Nenhuma meta. Adicione uma acima!</p>}
                 </div>
               </section>
+
+              {/* Pomodoro Method Explanation */}
+              <section className="lg:col-span-2 premium-glass bg-gradient-to-br from-indigo-900/30 to-purple-900/30 rounded-[32px] p-8 md:p-10 border border-purple-500/30 flex flex-col gap-5 relative overflow-hidden shadow-[0_0_50px_rgba(139,92,246,0.1)]">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="p-3 bg-purple-500 rounded-2xl shadow-[0_0_20px_rgba(139,92,246,0.5)]">
+                    <BookOpen className="w-6 h-6 text-white" />
+                  </div>
+                  <h2 className="text-2xl font-black text-white">Método Pomodoro</h2>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+                    O Método Pomodoro é uma técnica de gerenciamento do tempo que ajuda a aumentar o foco e a produtividade durante os estudos. Ele consiste em estudar por 25 minutos com total concentração e, em seguida, fazer uma pausa de 5 minutos. Após completar quatro ciclos, recomenda-se um descanso maior, de 15 a 30 minutos, para recuperar as energias.
+                  </p>
+                  <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+                    Para aproveitar melhor o método, utilize o timer acima. Assim, você será avisado quando chegar a hora de fazer uma pausa e também quando for o momento de voltar aos estudos, mantendo uma rotina organizada, saudável e eficiente.
+                  </p>
+                </div>
+              </section>
             </div>
           </div>
         )}
