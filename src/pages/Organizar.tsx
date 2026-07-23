@@ -328,7 +328,7 @@ export default function Organizar() {
                 </div>
                 <div className="space-y-4">
                   <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                    O Método Pomodoro é uma técnica de gerenciamento do tempo que ajuda a aumentar o foco e a produtividade durante os estudos. Ele consiste em estudar por 25 minutos com total concentração e, em seguida, fazer uma pausa de 5 minutos. Após completar quatro ciclos, recomenda-se um descanso maior, de 15 a 30 minutos, para recuperar as energias.
+                    O Método Pomodoro é uma técnica de gerenciamento do tempo que ajuda a aumentar o foco e a produtividade durante os estudos. Cada ciclo completo dura <span className="text-white font-bold">30 minutos</span>: você estuda por <span className="text-purple-300 font-bold">25 minutos</span> com total concentração e, em seguida, faz uma <span className="text-green-300 font-bold">pausa de 5 minutos</span>. Após completar quatro ciclos, recomenda-se um descanso maior, de 15 a 30 minutos, para recuperar as energias.
                   </p>
                   <p className="text-gray-300 text-sm md:text-base leading-relaxed">
                     Para aproveitar melhor o método, utilize o timer acima. Assim, você será avisado quando chegar a hora de fazer uma pausa e também quando for o momento de voltar aos estudos, mantendo uma rotina organizada, saudável e eficiente.
