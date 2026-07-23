@@ -14,35 +14,62 @@ export default function Organizar() {
   const [reminderModal, setReminderModal] = useState<{ show: boolean, message: string }>({ show: false, message: '' });
 
   // --- OVERVIEW / POMODORO STATE ---
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [timeLeft, setTimeLeft] = useState(30 * 60);
   const [timerTab, setTimerTab] = useState<'study' | 'short' | 'long'>('study');
   const [isRunning, setIsRunning] = useState(false);
   const [newGoalText, setNewGoalText] = useState('');
-  const [goals, setGoals] = useState([
-    { id: 1, title: 'Revisar conteúdo de História', done: false, category: 'Estudo' },
-    { id: 2, title: 'Fazer lista de Matemática', done: true, category: 'Tarefa' },
-  ]);
+  const [goals, setGoals] = useState<{ id: number, title: string, done: boolean, category: string }[]>([]);
+
+  // Request notification permission on mount
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  const showSystemNotification = (title: string, body: string) => {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification(title, { body, icon: '/logo.png' });
+    }
+  };
+
+  // Keep track of if we've already shown the 5-minute reminder for the current session
+  const [hasShownRestReminder, setHasShownRestReminder] = useState(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    }
+    
+    // Check for 25 minutes elapsed (5 minutes left)
+    if (isRunning && timeLeft === 5 * 60 && timerTab === 'study' && !hasShownRestReminder) {
+      setHasShownRestReminder(true);
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+      audio.play().catch(e => console.log('Audio play failed:', e));
+      setReminderModal({ 
+        show: true, 
+        message: 'Você estudou 25 minutos com foco total! Agora aproveite os próximos 5 minutos para descansar e recuperar as energias.' 
+      });
+      showSystemNotification('Hora do Descanso!', 'Você estudou 25 minutos. Faltam 5 minutos de descanso neste ciclo.');
     } else if (isRunning && timeLeft === 0) {
       setIsRunning(false);
       const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
       audio.play().catch(e => console.log('Audio play failed:', e));
       setReminderModal({ 
         show: true, 
-        message: timerTab === 'study' ? 'Tempo de estudo finalizado! Hora de descansar.' : 'Descanso finalizado! Hora de voltar aos estudos.' 
+        message: timerTab === 'study' ? 'Ciclo de 30 minutos concluído com sucesso!' : 'Descanso finalizado! Hora de voltar aos estudos.' 
       });
+      showSystemNotification('Ciclo Finalizado', timerTab === 'study' ? 'Ciclo de 30 minutos concluído!' : 'Descanso finalizado!');
     }
     return () => clearInterval(interval);
-  }, [isRunning, timeLeft, timerTab]);
+  }, [isRunning, timeLeft, timerTab, hasShownRestReminder]);
 
   const handleTimerChange = (mode: 'study' | 'short' | 'long') => {
     setTimerTab(mode);
     setIsRunning(false);
-    if (mode === 'study') setTimeLeft(25 * 60);
+    setHasShownRestReminder(false);
+    if (mode === 'study') setTimeLeft(30 * 60);
     if (mode === 'short') setTimeLeft(5 * 60);
     if (mode === 'long') setTimeLeft(15 * 60);
   };
@@ -190,14 +217,17 @@ export default function Organizar() {
         if (subject && typeof subject === 'string' && subject.trim() !== '') {
           const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
           audio.play().catch(e => console.log('Audio play failed:', e));
+          
           setReminderModal({
             show: true,
             message: `📚 Lembrete de Aula!\n\nAgora são ${currentTimeStr}. É hora de estudar: ${subject}`
           });
+          showSystemNotification('Lembrete de Aula', `Agora são ${currentTimeStr}. É hora de estudar: ${subject}`);
+          
           lastAlerted.current = currentTimeStr;
         }
       });
-    }, 30000); // Check every 30 seconds
+    }, 5000); // Check every 5 seconds to not miss the exact minute
 
     return () => clearInterval(interval);
   }, [scheduleRows, dataLoaded]);
