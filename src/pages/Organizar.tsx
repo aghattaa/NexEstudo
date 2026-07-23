@@ -26,11 +26,15 @@ export default function Organizar() {
     let interval: NodeJS.Timeout;
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
-    } else if (timeLeft === 0) {
+    } else if (isRunning && timeLeft === 0) {
       setIsRunning(false);
+      // Play a simple beep sound and show an alert
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+      audio.play().catch(e => console.log('Audio play failed:', e));
+      alert(timerTab === 'study' ? 'Tempo de estudo finalizado! Hora de descansar.' : 'Descanso finalizado! Hora de voltar aos estudos.');
     }
     return () => clearInterval(interval);
-  }, [isRunning, timeLeft]);
+  }, [isRunning, timeLeft, timerTab]);
 
   const handleTimerChange = (mode: 'study' | 'short' | 'long') => {
     setTimerTab(mode);
