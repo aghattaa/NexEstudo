@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -32,24 +32,26 @@ export default function App() {
     );
   }
 
-  if (!isAuthenticated) {
-    return <OnboardingFlow onComplete={() => setIsAuthenticated(true)} />;
-  }
-
+  // Wrap everything (auth screens + main app) in Router so hooks like useLocation always work
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
-        <Header />
-        <main className="flex-grow flex flex-col">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/aprender" element={<Aprender />} />
-            <Route path="/aprender/:materiaId" element={<Materia />} />
-            <Route path="/organizar" element={<Organizar />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      {!isAuthenticated ? (
+        <OnboardingFlow onComplete={() => setIsAuthenticated(true)} />
+      ) : (
+        <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
+          <Header />
+          <main className="flex-grow flex flex-col">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/aprender" element={<Aprender />} />
+              <Route path="/aprender/:materiaId" element={<Materia />} />
+              <Route path="/organizar" element={<Organizar />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      )}
     </Router>
   );
 }
