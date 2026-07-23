@@ -7,6 +7,7 @@ import Aprender from './pages/Aprender';
 import Materia from './pages/Materia';
 import Organizar from './pages/Organizar';
 import OnboardingFlow from './components/auth/OnboardingFlow';
+import GlobalReminders from './components/GlobalReminders';
 import { useUser } from './contexts/UserContext';
 import { Sparkles } from 'lucide-react';
 
@@ -70,6 +71,7 @@ export default function App() {
         <OnboardingFlow onComplete={handleOnboardingComplete} />
       ) : (
         <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
+          <GlobalReminders />
           <Header />
           <main className="flex-grow flex flex-col">
             <Routes>

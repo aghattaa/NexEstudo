@@ -189,50 +189,7 @@ export default function Organizar() {
     saveToFirestore({ events });
   }, [events, dataLoaded, saveToFirestore]);
 
-  // --- SCHEDULE REMINDER ALERTS ---
-  const lastAlerted = useRef<string>('');
-  useEffect(() => {
-    if (!dataLoaded || scheduleRows.length === 0) return;
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours().toString().padStart(2, '0');
-      const currentMinute = now.getMinutes().toString().padStart(2, '0');
-      const currentTimeStr = `${currentHour}:${currentMinute}`;
-      
-      const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-      const todayName = dayNames[now.getDay()];
-
-      // Only check on weekdays
-      if (todayName === 'Domingo' || todayName === 'Sábado') return;
-
-      // Don't alert multiple times for the same minute
-      if (lastAlerted.current === currentTimeStr) return;
-
-      const activeClasses = scheduleRows.filter(row => row.time === currentTimeStr);
-      
-      activeClasses.forEach(row => {
-        // @ts-ignore - todayName maps to ScheduleRow keys
-        const subject = row[todayName];
-        if (subject && typeof subject === 'string' && subject.trim() !== '') {
-          const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-          audio.play().catch(e => console.log('Audio play failed:', e));
-          
-          setReminderModal({
-            show: true,
-            message: `📚 Lembrete de Aula!\n\nAgora são ${currentTimeStr}. É hora de estudar: ${subject}`
-          });
-          showSystemNotification('Lembrete de Aula', `Agora são ${currentTimeStr}. É hora de estudar: ${subject}`);
-          
-          lastAlerted.current = currentTimeStr;
-        }
-      });
-    }, 5000); // Check every 5 seconds to not miss the exact minute
-
-    return () => clearInterval(interval);
-  }, [scheduleRows, dataLoaded]);
-
-  // --- SCHEDULE ACTIONS ---
+  // Schedule actions...
   const updateScheduleCell = (id: number, field: keyof ScheduleRow, value: string) => {
     setScheduleRows(prev => prev.map(row => row.id === id ? { ...row, [field]: value } : row));
   };
