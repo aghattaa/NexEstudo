@@ -3,6 +3,7 @@ import { Target, Clock, Calendar as CalendarIcon, GraduationCap, Grid, Play, Pau
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useUser } from '../contexts/UserContext';
+import { usePomodoro } from '../contexts/PomodoroContext';
 
 type TabType = 'overview' | 'schedule' | 'calendar' | 'grades';
 
@@ -11,67 +12,14 @@ export default function Organizar() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  const [reminderModal, setReminderModal] = useState<{ show: boolean, message: string }>({ show: false, message: '' });
-
-  // --- OVERVIEW / POMODORO STATE ---
-  const [timeLeft, setTimeLeft] = useState(30 * 60);
-  const [timerTab, setTimerTab] = useState<'study' | 'short' | 'long'>('study');
-  const [isRunning, setIsRunning] = useState(false);
+  // --- OVERVIEW / POMODORO (Global State via Context) ---
+  const { timeLeft, timerMode: timerTab, isRunning, setTimerMode, toggleRunning, resetTimer } = usePomodoro();
   const [newGoalText, setNewGoalText] = useState('');
   const [goals, setGoals] = useState<{ id: number, title: string, done: boolean, category: string }[]>([]);
 
-  // Request notification permission on mount
-  useEffect(() => {
-    if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-      Notification.requestPermission();
-    }
-  }, []);
-
-  const showSystemNotification = (title: string, body: string) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(title, { body, icon: '/logo.png' });
-    }
-  };
-
-  // Keep track of if we've already shown the 5-minute reminder for the current session
-  const [hasShownRestReminder, setHasShownRestReminder] = useState(false);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isRunning && timeLeft > 0) {
-      interval = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
-    }
-    
-    // Check for 25 minutes elapsed (5 minutes left)
-    if (isRunning && timeLeft === 5 * 60 && timerTab === 'study' && !hasShownRestReminder) {
-      setHasShownRestReminder(true);
-      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-      audio.play().catch(e => console.log('Audio play failed:', e));
-      setReminderModal({ 
-        show: true, 
-        message: 'Você estudou 25 minutos com foco total! Agora aproveite os próximos 5 minutos para descansar e recuperar as energias.' 
-      });
-      showSystemNotification('Hora do Descanso!', 'Você estudou 25 minutos. Faltam 5 minutos de descanso neste ciclo.');
-    } else if (isRunning && timeLeft === 0) {
-      setIsRunning(false);
-      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-      audio.play().catch(e => console.log('Audio play failed:', e));
-      setReminderModal({ 
-        show: true, 
-        message: timerTab === 'study' ? 'Ciclo de 30 minutos concluído com sucesso!' : 'Descanso finalizado! Hora de voltar aos estudos.' 
-      });
-      showSystemNotification('Ciclo Finalizado', timerTab === 'study' ? 'Ciclo de 30 minutos concluído!' : 'Descanso finalizado!');
-    }
-    return () => clearInterval(interval);
-  }, [isRunning, timeLeft, timerTab, hasShownRestReminder]);
-
+  // handleTimerChange delegates to the global context
   const handleTimerChange = (mode: 'study' | 'short' | 'long') => {
-    setTimerTab(mode);
-    setIsRunning(false);
-    setHasShownRestReminder(false);
-    if (mode === 'study') setTimeLeft(30 * 60);
-    if (mode === 'short') setTimeLeft(5 * 60);
-    if (mode === 'long') setTimeLeft(15 * 60);
+    setTimerMode(mode);
   };
 
   const formatTime = (seconds: number) => {
@@ -320,10 +268,10 @@ export default function Organizar() {
                   </div>
                 </div>
                 <div className="flex gap-4 w-full">
-                  <button onClick={() => setIsRunning(!isRunning)} className="flex-1 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-extrabold py-5 rounded-2xl text-xl shadow-[0_10px_30px_rgba(139,92,246,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-3">
+                  <button onClick={toggleRunning} className="flex-1 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-extrabold py-5 rounded-2xl text-xl shadow-[0_10px_30px_rgba(139,92,246,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-3">
                     {isRunning ? <><Pause className="w-7 h-7" /> Pausar Foco</> : <><Play className="w-7 h-7 fill-current" /> Iniciar Foco</>}
                   </button>
-                  <button onClick={() => handleTimerChange(timerTab)} className="w-20 bg-white/10 hover:bg-white/20 text-white py-5 rounded-2xl transition-all flex items-center justify-center backdrop-blur-md border border-white/20">
+                  <button onClick={resetTimer} className="w-20 bg-white/10 hover:bg-white/20 text-white py-5 rounded-2xl transition-all flex items-center justify-center backdrop-blur-md border border-white/20">
                     <RotateCcw className="w-6 h-6" />
                   </button>
                 </div>

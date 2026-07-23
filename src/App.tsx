@@ -8,43 +8,32 @@ import Materia from './pages/Materia';
 import Organizar from './pages/Organizar';
 import OnboardingFlow from './components/auth/OnboardingFlow';
 import GlobalReminders from './components/GlobalReminders';
+import PomodoroWatcher from './components/PomodoroWatcher';
 import { useUser } from './contexts/UserContext';
+import { PomodoroProvider } from './contexts/PomodoroContext';
 import { Sparkles } from 'lucide-react';
 
 export default function App() {
   const { isAuthenticated, setIsAuthenticated, authLoading } = useUser();
 
-  // Controls whether to show the OnboardingFlow.
-  // ONLY set to false by:
-  //   1. handleOnboardingComplete() — user finished registration flow
-  //   2. authLoading finishes and user is already authenticated (returning user)
-  // Does NOT change when Firebase fires mid-registration.
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   useEffect(() => {
     if (!authLoading) {
-      // After initial auth check resolves:
       if (isAuthenticated) {
-        // Returning user — skip onboarding
         setShowOnboarding(false);
       } else {
-        // No session found — show onboarding
         setShowOnboarding(true);
       }
     }
-    // Only run once, when authLoading transitions to false
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading]);
 
-  // useCallback ensures this function reference is STABLE across App re-renders.
-  // This prevents the setTimeout inside OnboardingFlow from being cancelled
-  // when Firebase fires onAuthStateChanged during registration.
   const handleOnboardingComplete = useCallback(() => {
     setIsAuthenticated(true);
     setShowOnboarding(false);
   }, [setIsAuthenticated]);
 
-  // While Firebase checks auth state, show a splash screen
   if (authLoading) {
     return (
       <div className="w-full h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
@@ -64,27 +53,30 @@ export default function App() {
     );
   }
 
-  // Wrap everything in Router so hooks like useLocation always have context
   return (
-    <Router>
-      {showOnboarding ? (
-        <OnboardingFlow onComplete={handleOnboardingComplete} />
-      ) : (
-        <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
-          <GlobalReminders />
-          <Header />
-          <main className="flex-grow flex flex-col">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/aprender" element={<Aprender />} />
-              <Route path="/aprender/:materiaId" element={<Materia />} />
-              <Route path="/organizar" element={<Organizar />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      )}
-    </Router>
+    <PomodoroProvider>
+      <Router>
+        {showOnboarding ? (
+          <OnboardingFlow onComplete={handleOnboardingComplete} />
+        ) : (
+          <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
+            {/* Global services — always active regardless of current page */}
+            <GlobalReminders />
+            <PomodoroWatcher />
+            <Header />
+            <main className="flex-grow flex flex-col">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/aprender" element={<Aprender />} />
+                <Route path="/aprender/:materiaId" element={<Materia />} />
+                <Route path="/organizar" element={<Organizar />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        )}
+      </Router>
+    </PomodoroProvider>
   );
 }
