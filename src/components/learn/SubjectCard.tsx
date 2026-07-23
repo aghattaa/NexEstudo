@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, BookOpen, Clock, TrendingUp, Star } from 'lucide-react';
 import type { Subject } from '../../data/subjects';
+import { subjectData } from '../../data/subjects';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 
 interface SubjectCardProps {
   subject: Subject;
@@ -11,6 +13,23 @@ interface SubjectCardProps {
 export default function SubjectCard({ subject, variant = 'compact', index = 0 }: SubjectCardProps) {
   const Icon = subject.icon;
   const delay = `animation-delay-${Math.min((index + 1) * 100, 800)}`;
+  const { progress: studentProgress } = useStudentProgress();
+
+  // Dynamically calculate progress
+  let calculatedTotal = subject.totalTopics;
+  let calculatedCompleted = 0;
+  let calculatedProgressPercent = 0;
+  let calculatedXp = 0;
+
+  if (subjectData[subject.id]) {
+    const sData = subjectData[subject.id];
+    const allTopics = [...sData.anosFinais, ...sData.ensinoMedio].flatMap(year => year.topics);
+    calculatedTotal = allTopics.length;
+    const completedForSubject = allTopics.filter(t => studentProgress.completedTopics.includes(t.id));
+    calculatedCompleted = completedForSubject.length;
+    calculatedProgressPercent = calculatedTotal > 0 ? Math.round((calculatedCompleted / calculatedTotal) * 100) : 0;
+    calculatedXp = calculatedCompleted * 50; // XP per topic
+  }
 
   if (variant === 'featured') {
     return (
@@ -99,7 +118,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
               <div className="flex items-center gap-1.5">
                 <TrendingUp className="w-3.5 h-3.5 text-gray-500" />
                 <span className="text-xs text-gray-400">
-                  <span className="font-bold text-white">{subject.completedTopics}</span>/{subject.totalTopics} tópicos
+                  <span className="font-bold text-white">{calculatedCompleted}</span>/{calculatedTotal} tópicos
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -108,7 +127,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
               </div>
               <div className="flex items-center gap-1.5">
                 <Star className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-xs font-bold text-amber-400">{subject.xpTotal.toLocaleString('pt-BR')} XP</span>
+                <span className="text-xs font-bold text-amber-400">{calculatedXp.toLocaleString('pt-BR')} XP</span>
               </div>
             </div>
 
@@ -116,12 +135,12 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
             <div className="mb-7">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest">Progresso</span>
-                <span className="text-sm font-black text-white">{subject.progress}%</span>
+                <span className="text-sm font-black text-white">{calculatedProgressPercent}%</span>
               </div>
               <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full ${subject.progressColor} relative overflow-hidden transition-all duration-1000`}
-                  style={{ width: `${subject.progress}%` }}
+                  style={{ width: `${calculatedProgressPercent}%` }}
                 >
                   <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 </div>
@@ -188,7 +207,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
             <p className="text-[11px] font-mono text-gray-500 truncate">{subject.recentActivity}</p>
           </div>
           <div className="shrink-0">
-            <span className="text-lg font-black text-white">{subject.progress}%</span>
+            <span className="text-lg font-black text-white">{calculatedProgressPercent}%</span>
           </div>
         </div>
 
@@ -196,7 +215,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
         <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-3">
           <div
             className={`h-full rounded-full ${subject.progressColor} transition-all duration-700`}
-            style={{ width: `${subject.progress}%` }}
+            style={{ width: `${calculatedProgressPercent}%` }}
           />
         </div>
 
@@ -204,7 +223,7 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Zap className="w-3 h-3 text-amber-400" />
-            <span className="text-xs font-bold text-amber-400">+{subject.xpTotal.toLocaleString('pt-BR')} XP</span>
+            <span className="text-xs font-bold text-amber-400">+{calculatedXp.toLocaleString('pt-BR')} XP</span>
           </div>
           <div className="flex items-center gap-1 text-[11px] text-gray-500 group-hover:text-gray-300 transition-colors font-medium">
             Ver trilha <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
