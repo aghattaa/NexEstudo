@@ -23,119 +23,106 @@ const MODE_DURATIONS: Record<TimerMode, number> = {
 
 export function PomodoroProvider({ children }: { children: ReactNode }) {
   const [timerMode, setTimerModeState] = useState<TimerMode>('study');
-  // timeLeft is the "remaining seconds" we display
   const [timeLeft, setTimeLeft] = useState(MODE_DURATIONS.study);
   const [isRunning, setIsRunning] = useState(false);
   const [hasShownRestReminder, setHasShownRestReminder] = useState(false);
 
-  // We track the real-world start anchor so paused/throttled tabs catch up correctly.
-  // startAnchor = { wallTime: Date.now(), remainingAtStart: seconds }
-  const startAnchor = useRef<{ wallTime: number; remainingAtStart: number } | null>(null);
-  const rafRef = useRef<number | null>(null);
+  // The absolute wall-clock moment when the timer should hit zero.
+  // This is the ONLY source of truth — not a counter.
+  const endTimeRef = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Use requestAnimationFrame + visibility change to keep the timer accurate
-  const tick = useCallback(() => {
-    if (!startAnchor.current) return;
-    const elapsedMs = Date.now() - startAnchor.current.wallTime;
-    const elapsedSec = Math.floor(elapsedMs / 1000);
-    const newTimeLeft = Math.max(0, startAnchor.current.remainingAtStart - elapsedSec);
-    setTimeLeft(newTimeLeft);
+  // Reads the wall clock and returns how many seconds remain
+  const getSecondsLeft = () => {
+    if (!endTimeRef.current) return timeLeft;
+    return Math.max(0, Math.round((endTimeRef.current - Date.now()) / 1000));
+  };
 
-    if (newTimeLeft > 0) {
-      rafRef.current = requestAnimationFrame(tick);
-    } else {
-      // Timer reached zero — stop
-      setIsRunning(false);
-      startAnchor.current = null;
-    }
+  // Starts the display-update interval (runs every 500ms to keep display accurate)
+  const startDisplayInterval = useCallback((onZero: () => void) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      const tl = Math.max(0, Math.round(((endTimeRef.current ?? Date.now()) - Date.now()) / 1000));
+      setTimeLeft(tl);
+      if (tl <= 0) {
+        clearInterval(intervalRef.current!);
+        intervalRef.current = null;
+        onZero();
+      }
+    }, 500);
   }, []);
 
-  // When running state changes, start or stop the RAF loop
-  useEffect(() => {
-    if (isRunning) {
-      // Anchor to current wall time
-      startAnchor.current = { wallTime: Date.now(), remainingAtStart: timeLeft };
-      rafRef.current = requestAnimationFrame(tick);
-    } else {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      startAnchor.current = null;
-    }
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-    // We intentionally do NOT include `timeLeft` here so toggling pause doesn't re-trigger
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRunning, tick]);
-
-  // When the tab becomes visible again, re-anchor so the timer catches up immediately
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && isRunning && startAnchor.current) {
-        // Cancel old RAF and restart from current wall time with the current remaining time
-        if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
-        // Recalculate what's left based on wall clock
-        const elapsedMs = Date.now() - startAnchor.current.wallTime;
-        const elapsedSec = Math.floor(elapsedMs / 1000);
-        const catchUpTimeLeft = Math.max(0, startAnchor.current.remainingAtStart - elapsedSec);
-
-        // Update anchor to now so the tick continues cleanly
-        startAnchor.current = { wallTime: Date.now(), remainingAtStart: catchUpTimeLeft };
-        setTimeLeft(catchUpTimeLeft);
-
-        if (catchUpTimeLeft > 0) {
-          rafRef.current = requestAnimationFrame(tick);
-        } else {
-          setIsRunning(false);
-          startAnchor.current = null;
-        }
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [isRunning, tick]);
+  const handleTimerZero = useCallback(() => {
+    endTimeRef.current = null;
+    setIsRunning(false);
+  }, []);
 
   const toggleRunning = useCallback(() => {
     setIsRunning(prev => {
       if (!prev) {
-        // About to START — anchor will be set in the useEffect above
+        // STARTING: compute endTime from current timeLeft
+        const currentLeft = getSecondsLeft();
+        endTimeRef.current = Date.now() + currentLeft * 1000;
+        startDisplayInterval(handleTimerZero);
         return true;
       } else {
-        // About to PAUSE — capture current remaining time
-        if (startAnchor.current) {
-          const elapsedMs = Date.now() - startAnchor.current.wallTime;
-          const elapsedSec = Math.floor(elapsedMs / 1000);
-          const paused = Math.max(0, startAnchor.current.remainingAtStart - elapsedSec);
-          setTimeLeft(paused);
-          startAnchor.current = null;
+        // PAUSING: freeze timeLeft at current wall-clock value
+        const frozen = getSecondsLeft();
+        setTimeLeft(frozen);
+        endTimeRef.current = null;
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
         }
         return false;
       }
     });
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startDisplayInterval, handleTimerZero]);
+
+  // When tab becomes visible again: resync display from wall clock and restart interval
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible' && endTimeRef.current) {
+        const tl = Math.max(0, Math.round((endTimeRef.current - Date.now()) / 1000));
+        setTimeLeft(tl);
+        if (tl <= 0) {
+          endTimeRef.current = null;
+          setIsRunning(false);
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+        } else {
+          // Restart display interval — the endTime is already correct
+          startDisplayInterval(handleTimerZero);
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [startDisplayInterval, handleTimerZero]);
 
   const setTimerMode = useCallback((mode: TimerMode) => {
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    endTimeRef.current = null;
     setTimerModeState(mode);
-    setIsRunning(false);
     setTimeLeft(MODE_DURATIONS[mode]);
+    setIsRunning(false);
     setHasShownRestReminder(false);
-    startAnchor.current = null;
   }, []);
 
   const resetTimer = useCallback(() => {
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    endTimeRef.current = null;
     setIsRunning(false);
-    setTimerModeState(prev => {
-      setTimeLeft(MODE_DURATIONS[prev]);
-      return prev;
-    });
     setHasShownRestReminder(false);
-    startAnchor.current = null;
+    setTimerModeState(prev => { setTimeLeft(MODE_DURATIONS[prev]); return prev; });
   }, []);
 
-  const setReminderShown = useCallback((shown: boolean) => {
-    setHasShownRestReminder(shown);
-  }, []);
+  const setReminderShown = useCallback((shown: boolean) => setHasShownRestReminder(shown), []);
+
+  useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
 
   return (
     <PomodoroContext.Provider value={{
