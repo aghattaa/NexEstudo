@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -11,6 +12,30 @@ import { Sparkles } from 'lucide-react';
 
 export default function App() {
   const { isAuthenticated, setIsAuthenticated, authLoading } = useUser();
+
+  // This state controls whether to show the onboarding flow.
+  // It is ONLY set to false by:
+  //   1. onComplete() being explicitly called (user finished the flow)
+  //   2. authLoading finishes and user is already authenticated (returning user)
+  // It does NOT change just because Firebase fires onAuthStateChanged mid-registration.
+  const [showOnboarding, setShowOnboarding] = useState(true);
+
+  useEffect(() => {
+    // Once the initial Firebase auth check is done, if the user is ALREADY
+    // authenticated (returning user / remembered session), skip the onboarding.
+    if (!authLoading && isAuthenticated) {
+      setShowOnboarding(false);
+    }
+    // If authLoading finishes and user is NOT authenticated, keep showOnboarding = true
+    if (!authLoading && !isAuthenticated) {
+      setShowOnboarding(true);
+    }
+  }, [authLoading]); // Only runs when authLoading changes (i.e., once on page load)
+
+  const handleOnboardingComplete = () => {
+    setIsAuthenticated(true);
+    setShowOnboarding(false);
+  };
 
   // While Firebase checks auth state, show a splash screen
   if (authLoading) {
@@ -32,11 +57,11 @@ export default function App() {
     );
   }
 
-  // Wrap everything (auth screens + main app) in Router so hooks like useLocation always work
+  // Wrap everything in Router so hooks like useLocation always work
   return (
     <Router>
-      {!isAuthenticated ? (
-        <OnboardingFlow onComplete={() => setIsAuthenticated(true)} />
+      {showOnboarding ? (
+        <OnboardingFlow onComplete={handleOnboardingComplete} />
       ) : (
         <div className="min-h-screen flex flex-col bg-nexus-bg text-white">
           <Header />
