@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -13,29 +13,35 @@ import { Sparkles } from 'lucide-react';
 export default function App() {
   const { isAuthenticated, setIsAuthenticated, authLoading } = useUser();
 
-  // This state controls whether to show the onboarding flow.
-  // It is ONLY set to false by:
-  //   1. onComplete() being explicitly called (user finished the flow)
+  // Controls whether to show the OnboardingFlow.
+  // ONLY set to false by:
+  //   1. handleOnboardingComplete() — user finished registration flow
   //   2. authLoading finishes and user is already authenticated (returning user)
-  // It does NOT change just because Firebase fires onAuthStateChanged mid-registration.
+  // Does NOT change when Firebase fires mid-registration.
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   useEffect(() => {
-    // Once the initial Firebase auth check is done, if the user is ALREADY
-    // authenticated (returning user / remembered session), skip the onboarding.
-    if (!authLoading && isAuthenticated) {
-      setShowOnboarding(false);
+    if (!authLoading) {
+      // After initial auth check resolves:
+      if (isAuthenticated) {
+        // Returning user — skip onboarding
+        setShowOnboarding(false);
+      } else {
+        // No session found — show onboarding
+        setShowOnboarding(true);
+      }
     }
-    // If authLoading finishes and user is NOT authenticated, keep showOnboarding = true
-    if (!authLoading && !isAuthenticated) {
-      setShowOnboarding(true);
-    }
-  }, [authLoading]); // Only runs when authLoading changes (i.e., once on page load)
+    // Only run once, when authLoading transitions to false
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading]);
 
-  const handleOnboardingComplete = () => {
+  // useCallback ensures this function reference is STABLE across App re-renders.
+  // This prevents the setTimeout inside OnboardingFlow from being cancelled
+  // when Firebase fires onAuthStateChanged during registration.
+  const handleOnboardingComplete = useCallback(() => {
     setIsAuthenticated(true);
     setShowOnboarding(false);
-  };
+  }, [setIsAuthenticated]);
 
   // While Firebase checks auth state, show a splash screen
   if (authLoading) {
@@ -57,7 +63,7 @@ export default function App() {
     );
   }
 
-  // Wrap everything in Router so hooks like useLocation always work
+  // Wrap everything in Router so hooks like useLocation always have context
   return (
     <Router>
       {showOnboarding ? (

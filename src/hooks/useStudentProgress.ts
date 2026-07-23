@@ -118,11 +118,7 @@ const DEFAULT_STATE: StudentProgress = {
   lastStudied: null,
   completedTopics: [],
   dailyMissions: generateDailyMissions(),
-  achievements: [
-    { ...ALL_ACHIEVEMENTS[0], unlockedAt: new Date(Date.now() - 86400000 * 2) },
-    { ...ALL_ACHIEVEMENTS[1], unlockedAt: new Date(Date.now() - 86400000 * 5) },
-    { ...ALL_ACHIEVEMENTS[2], unlockedAt: new Date(Date.now() - 86400000 * 10) },
-  ],
+  achievements: [],
   lastMissionReset: new Date().toDateString(),
 };
 

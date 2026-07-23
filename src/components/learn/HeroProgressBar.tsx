@@ -84,7 +84,7 @@ export default function HeroProgressBar() {
           {/* Mini stats */}
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Tópicos', value: progress.completedTopics.length + 13, icon: TrendingUp, color: 'text-nexus-blue' },
+              { label: 'Tópicos', value: progress.completedTopics.length, icon: TrendingUp, color: 'text-nexus-blue' },
               { label: 'Conquistas', value: progress.achievements.length, icon: Star, color: 'text-amber-400' },
               { label: 'Streak', value: `${progress.streak}d`, icon: Flame, color: 'text-orange-400' },
             ].map(stat => (
