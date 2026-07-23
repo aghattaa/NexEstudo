@@ -23,7 +23,9 @@ export default function SubjectCard({ subject, variant = 'compact', index = 0 }:
 
   if (subjectData[subject.id]) {
     const sData = subjectData[subject.id];
-    const allTopics = [...sData.anosFinais, ...sData.ensinoMedio].flatMap(year => year.topics);
+    const anosFinais = sData.anosFinais || [];
+    const ensinoMedio = (sData as any).ensinoMedio || [];
+    const allTopics = [...anosFinais, ...ensinoMedio].flatMap(year => year.topics);
     calculatedTotal = allTopics.length;
     const completedForSubject = allTopics.filter(t => studentProgress.completedTopics.includes(t.id));
     calculatedCompleted = completedForSubject.length;
