@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 
 type TimerMode = 'study' | 'short' | 'long';
 
-interface PomodoroContextType {
+export interface PomodoroContextType {
   timeLeft: number;
   timerMode: TimerMode;
   isRunning: boolean;
@@ -21,115 +21,137 @@ const MODE_DURATIONS: Record<TimerMode, number> = {
   long: 15 * 60,
 };
 
+const LS_KEY = 'nexestudo_pomodoro_v2';
+
+interface PersistedState {
+  endTime: number | null;   // wall-clock ms when timer should hit 0 (null = stopped/paused)
+  frozenLeft: number;       // seconds remaining when paused
+  mode: TimerMode;
+  hasShownRestReminder: boolean;
+}
+
+function load(): PersistedState {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) return JSON.parse(raw) as PersistedState;
+  } catch { /* ignore */ }
+  return { endTime: null, frozenLeft: MODE_DURATIONS.study, mode: 'study', hasShownRestReminder: false };
+}
+
+function save(s: PersistedState) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch { /* ignore */ }
+}
+
+function secondsLeft(s: PersistedState): number {
+  if (s.endTime === null) return s.frozenLeft;
+  return Math.max(0, Math.round((s.endTime - Date.now()) / 1000));
+}
+
 export function PomodoroProvider({ children }: { children: ReactNode }) {
-  const [timerMode, setTimerModeState] = useState<TimerMode>('study');
-  const [timeLeft, setTimeLeft] = useState(MODE_DURATIONS.study);
-  const [isRunning, setIsRunning] = useState(false);
-  const [hasShownRestReminder, setHasShownRestReminder] = useState(false);
+  const [persisted, setPersisted] = useState<PersistedState>(load);
+  const [displayLeft, setDisplayLeft] = useState(() => secondsLeft(load()));
 
-  // The absolute wall-clock moment when the timer should hit zero.
-  // This is the ONLY source of truth — not a counter.
-  const endTimeRef = useRef<number | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isRunning = persisted.endTime !== null && persisted.endTime > Date.now();
 
-  // Reads the wall clock and returns how many seconds remain
-  const getSecondsLeft = () => {
-    if (!endTimeRef.current) return timeLeft;
-    return Math.max(0, Math.round((endTimeRef.current - Date.now()) / 1000));
-  };
+  // Display update loop — only updates the number on screen, NOT the source of truth
+  useEffect(() => {
+    if (!isRunning) return;
 
-  // Starts the display-update interval (runs every 500ms to keep display accurate)
-  const startDisplayInterval = useCallback((onZero: () => void) => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      const tl = Math.max(0, Math.round(((endTimeRef.current ?? Date.now()) - Date.now()) / 1000));
-      setTimeLeft(tl);
-      if (tl <= 0) {
-        clearInterval(intervalRef.current!);
-        intervalRef.current = null;
-        onZero();
+    const tick = () => {
+      const s = load();
+      const tl = secondsLeft(s);
+      setDisplayLeft(tl);
+      if (tl <= 0 && s.endTime !== null) {
+        const stopped: PersistedState = { ...s, endTime: null, frozenLeft: 0 };
+        save(stopped);
+        setPersisted(stopped);
       }
-    }, 500);
-  }, []);
+    };
 
-  const handleTimerZero = useCallback(() => {
-    endTimeRef.current = null;
-    setIsRunning(false);
+    tick(); // immediate
+    const id = setInterval(tick, 500);
+    return () => clearInterval(id);
+  }, [isRunning]);
+
+  // When user switches back to this tab, immediately resync from wall clock
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return;
+      const s = load();
+      const tl = secondsLeft(s);
+      setDisplayLeft(tl);
+      if (tl <= 0 && s.endTime !== null) {
+        const stopped: PersistedState = { ...s, endTime: null, frozenLeft: 0 };
+        save(stopped);
+        setPersisted(stopped);
+      } else {
+        setPersisted({ ...s }); // trigger re-render so isRunning recalculates
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
   const toggleRunning = useCallback(() => {
-    setIsRunning(prev => {
-      if (!prev) {
-        // STARTING: compute endTime from current timeLeft
-        const currentLeft = getSecondsLeft();
-        endTimeRef.current = Date.now() + currentLeft * 1000;
-        startDisplayInterval(handleTimerZero);
-        return true;
-      } else {
-        // PAUSING: freeze timeLeft at current wall-clock value
-        const frozen = getSecondsLeft();
-        setTimeLeft(frozen);
-        endTimeRef.current = null;
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-        return false;
-      }
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDisplayInterval, handleTimerZero]);
+    const s = load();
+    const running = s.endTime !== null && s.endTime > Date.now();
 
-  // When tab becomes visible again: resync display from wall clock and restart interval
-  useEffect(() => {
-    const handleVisibility = () => {
-      if (document.visibilityState === 'visible' && endTimeRef.current) {
-        const tl = Math.max(0, Math.round((endTimeRef.current - Date.now()) / 1000));
-        setTimeLeft(tl);
-        if (tl <= 0) {
-          endTimeRef.current = null;
-          setIsRunning(false);
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-        } else {
-          // Restart display interval — the endTime is already correct
-          startDisplayInterval(handleTimerZero);
-        }
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, [startDisplayInterval, handleTimerZero]);
+    if (!running) {
+      // START: anchor endTime to now + frozen seconds
+      const newState: PersistedState = {
+        ...s,
+        endTime: Date.now() + s.frozenLeft * 1000,
+      };
+      save(newState);
+      setPersisted(newState);
+    } else {
+      // PAUSE: capture exact seconds remaining
+      const tl = secondsLeft(s);
+      const newState: PersistedState = { ...s, endTime: null, frozenLeft: tl };
+      save(newState);
+      setDisplayLeft(tl);
+      setPersisted(newState);
+    }
+  }, []);
 
   const setTimerMode = useCallback((mode: TimerMode) => {
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
-    endTimeRef.current = null;
-    setTimerModeState(mode);
-    setTimeLeft(MODE_DURATIONS[mode]);
-    setIsRunning(false);
-    setHasShownRestReminder(false);
+    const newState: PersistedState = {
+      endTime: null,
+      frozenLeft: MODE_DURATIONS[mode],
+      mode,
+      hasShownRestReminder: false,
+    };
+    save(newState);
+    setPersisted(newState);
+    setDisplayLeft(MODE_DURATIONS[mode]);
   }, []);
 
   const resetTimer = useCallback(() => {
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
-    endTimeRef.current = null;
-    setIsRunning(false);
-    setHasShownRestReminder(false);
-    setTimerModeState(prev => { setTimeLeft(MODE_DURATIONS[prev]); return prev; });
+    const s = load();
+    const newState: PersistedState = {
+      endTime: null,
+      frozenLeft: MODE_DURATIONS[s.mode],
+      mode: s.mode,
+      hasShownRestReminder: false,
+    };
+    save(newState);
+    setPersisted(newState);
+    setDisplayLeft(MODE_DURATIONS[s.mode]);
   }, []);
 
-  const setReminderShown = useCallback((shown: boolean) => setHasShownRestReminder(shown), []);
-
-  useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
+  const setReminderShown = useCallback((shown: boolean) => {
+    const s = load();
+    const newState = { ...s, hasShownRestReminder: shown };
+    save(newState);
+    setPersisted(newState);
+  }, []);
 
   return (
     <PomodoroContext.Provider value={{
-      timeLeft,
-      timerMode,
+      timeLeft: displayLeft,
+      timerMode: persisted.mode,
       isRunning,
-      hasShownRestReminder,
+      hasShownRestReminder: persisted.hasShownRestReminder,
       setTimerMode,
       toggleRunning,
       resetTimer,

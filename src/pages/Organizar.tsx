@@ -197,25 +197,6 @@ export default function Organizar() {
 
   return (
     <div className={`flex-1 flex flex-col md:flex-row min-h-screen bg-gradient-to-br transition-colors duration-1000 ${getTabColor()}`}>
-      
-      {/* MODAL DE LEMBRETE NÃO BLOQUEANTE */}
-      {reminderModal.show && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-nexus-card border border-nexus-blue/30 rounded-2xl p-6 max-w-sm w-full shadow-[0_0_40px_rgba(14,165,233,0.3)] animate-in zoom-in-95 duration-300">
-            <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-              <Clock className="w-6 h-6 text-nexus-blue" />
-              Lembrete
-            </h3>
-            <p className="text-gray-300 mb-6 whitespace-pre-line">{reminderModal.message}</p>
-            <button 
-              onClick={() => setReminderModal({ show: false, message: '' })}
-              className="w-full py-3 bg-nexus-blue hover:bg-sky-400 text-black font-bold rounded-xl transition-colors"
-            >
-              Entendi
-            </button>
-          </div>
-        </div>
-      )}
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-64 lg:w-72 premium-glass p-4 md:p-6 flex flex-col z-20 shadow-xl md:shadow-2xl border-b md:border-b-0 md:border-r border-white/10">
         <h2 className="hidden md:block text-3xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-purple-400 drop-shadow-sm">
